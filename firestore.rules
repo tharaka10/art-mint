@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow anyone to read/write the 'nfts' collection
+    match /nfts/{document=**} {
+      allow read, write: if true;
+    }
+
+    // Optional: allow everything (use with caution!)
+    // match /{document=**} {
+    //   allow read, write: if true;
+    // }
+  }
+}

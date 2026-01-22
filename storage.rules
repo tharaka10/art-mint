@@ -1,0 +1,8 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /nft-images/{allPaths=**} {
+      allow read, write: if true; // ⚠️ Public upload (unsafe for production)
+    }
+  }
+}

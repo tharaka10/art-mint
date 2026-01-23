@@ -1,4 +1,4 @@
-# nft_marketplace
+# art_mint
 
 BE-prod-build----gcloud builds submit --tag gcr.io/armint-8d704/server
 

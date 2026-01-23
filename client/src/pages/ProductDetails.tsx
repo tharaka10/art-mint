@@ -6,7 +6,7 @@ import productImage1 from "../assets/Product1.svg";
 import productImage2 from "../assets/Product2.svg";
 import productImage3 from "../assets/Product3.svg";
 import productImage4 from "../assets/Product4.svg";
-import NftChart from "../components/Admin/NftChart";
+
 
 const ProductDetails: React.FC = () => {
   return (
@@ -58,9 +58,7 @@ const ProductDetails: React.FC = () => {
           -16.5%
         </div>
       </div>
-      <div className="p-4">
-        <NftChart />
-      </div>
+      
       <div className="flex flex-col md:flex-row gap-6 px-5 mt-10 mb-10">
         {/* Left Card*/}
         <div className="bg-[#1c1c1c] text-white rounded-lg p-5 w-full md:w-1/2">

@@ -54,7 +54,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
 import toast, { Toaster } from "react-hot-toast";
-import ListForSale from "../components/ListNFT";
 import { LifeLine } from "react-loading-indicators";
 
 interface NFTItem {
@@ -67,7 +66,6 @@ interface NFTItem {
 const MyNFTsPage: React.FC = () => {
   const wallet = useWallet();
   const [nfts, setNfts] = useState<NFTItem[]>([]);
-  const [selectedNFT, setSelectedNFT] = useState<NFTItem | null>(null);
   const [loading, setLoading] = useState(false);
 
 const fetchMyNFTs = async () => {
@@ -149,25 +147,13 @@ const fetchMyNFTs = async () => {
               {nft.description?.slice(0, 80)}...
             </p>
 
-            <button
-              onClick={() => setSelectedNFT(nft)}
-              data-toggle="modal"
-              data-target="#listForSale"
-              className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition"
-            >
-              List for Sale
-            </button>
+            
           </div>
         ))}
       </div>
 
       {/* Modal: List For Sale */}
-      {selectedNFT && (
-        <ListForSale
-          nft={selectedNFT}
-          setLoader={setLoading}
-        />
-      )}
+     
     </div>
   );
 };

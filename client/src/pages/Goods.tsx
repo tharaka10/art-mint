@@ -8,12 +8,12 @@ import { Link, useLocation } from "react-router-dom";
 interface NFTData {
   mintAddress: string;
   name: string;
+  symbol: string;
   description: string;
   image: string;
-  manufactureDate: string;
-  expiryDate: string;
-  certificateUrl: string;
+
   owner: string;
+  createdAt: any;
 }
 
 const Goods: React.FC = () => {
@@ -65,19 +65,9 @@ const Goods: React.FC = () => {
               <p className="text-sm text-gray-300">{nft.description}</p>
 
               <ul className="mt-2 text-sm">
-                <li><strong>Manufactured:</strong> {nft.manufactureDate}</li>
-                <li><strong>Expires:</strong> {nft.expiryDate}</li>
-                <li>
-                  <strong>Certificate:</strong>{" "}
-                  <a
-                    href={nft.certificateUrl}
-                    className="text-blue-400 underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View
-                  </a>
-                </li>
+                <li><strong>Symbol:</strong> {nft.symbol}</li>
+                {/* <li><strong>Created Date and Time:</strong> {nft.createdAt}</li> */}
+                <li><strong>Mint Address:</strong> {nft.mintAddress}</li>
               </ul>
 
               <Link

@@ -12,7 +12,7 @@ const Footer = () => {
                          bg-gradient-to-r from-[#39e0ab] to-[#059669]
                          bg-clip-text text-transparent"
           >
-            NFThrive
+            Art Mint
           </div>
 
           <div className="flex items-center gap-4">
@@ -64,10 +64,10 @@ const Footer = () => {
         <div className="p-1 text-gray-500 text-center text-xs font-bold">
           Contact us :{" "}
           <a
-            href="mailto:pradath@gmail.com"
+            href="mailto:pradatha@gmail.com"
             className="text-blue-600 hover:underline"
           >
-            pradath@gmail.com
+            pradatha@gmail.com
           </a>
         </div>
 
@@ -75,7 +75,7 @@ const Footer = () => {
         <div className="mt-2 border-t border-gray-600 pt-4 text-xs">
           <div className="flex flex-col sm:flex-row justify-between items-center text-center gap-3">
             <p className="text-white">
-              © {new Date().getFullYear()} NFThrive. All Rights Reserved.
+              © {new Date().getFullYear()} Art Mint. All Rights Reserved.
             </p>
 
             <div className="flex gap-4">

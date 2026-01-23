@@ -9,10 +9,10 @@ const About: React.FC = () => {
         {/* Title */}
         <div className="text-center">
           <h1 className="text-5xl font-extrabold text-emerald-500 tracking-wide">
-            ABOUT NFThrive
+            ABOUT Art Mint
           </h1>
           <p className="mt-4 text-gray-400 text-lg leading-relaxed">
-            NFThrive empowers creators and collectors with unique digital assets on the blockchain, combining art, luxury, and technology.
+            Art Mint empowers creators and collectors with unique digital assets on the blockchain, combining art, luxury, and technology.
           </p>
         </div>
 

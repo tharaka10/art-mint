@@ -23,7 +23,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.10.0",
     "bn.js": "^5.2.2",
-    "firebase": "^12.1.0",
+    "firebase": "^12.8.0",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.554.0",
     "nft.storage": "^7.2.0",

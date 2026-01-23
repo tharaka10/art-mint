@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
 import ProfileDashboard from "../components/UserProfile/ProfileDashboard";
-import KycUploadForm from "../pages/KYCForm";
 
 const Profile: React.FC = () => {
   const { connected } = useWallet();
@@ -11,8 +10,8 @@ const Profile: React.FC = () => {
   if (!connected) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center p-5">
-        <h1 className="text-2xl font-bold mb-2">NFThrive</h1>
-        <p className="text-gray-400 mb-3">Connect With NFThrive</p>
+        <h1 className="text-2xl font-bold mb-2">Art Mint</h1>
+        <p className="text-gray-400 mb-3">Connect With Art Mint</p>
         <WalletMultiButton className="mb-3 p-10" />
       </div>
     );
@@ -49,10 +48,7 @@ const Profile: React.FC = () => {
                 Close
               </button>
             </div>
-
-
-            {/* KYC Form */}
-            <KycUploadForm {...({ maxFileSizeMB: 5 } as any)} />
+          
 
           </div>
         </div>

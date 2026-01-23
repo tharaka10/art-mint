@@ -3,12 +3,8 @@ import 'dotenv/config'; // loads .env automatically
 import express from "express";
 import cors from "cors";
 import fetch from "node-fetch"; // npm i node-fetch@2
-import { getTrackingStatus } from "./trackingService.js"; // your TrackingMore service
 import bodyParser from "body-parser";
 import nodemailer from "nodemailer";
-import shipmentRoutes from "./routes/shipmentRoutes.js";
-import "./cron/shipmentCron.js";
-import deliveryRoute from "./routes/deliveryRoute.js";
 
 
 
@@ -143,113 +139,7 @@ app.post('/api/update-user-kyc', (req, res) => {
   res.json({ success: true });
 });
 
-//shipping confirm
 
-app.use("/api/shipment", shipmentRoutes);
-app.use("/api/delivery", deliveryRoute);
-app.use("/delivery", deliveryRoute);
-
-// app.post("/api/shipment", async (req, res) => {
-//   try {
-//     const shipment = req.body;
-
-//     // Send email to receiver
-//     const mailOptions = {
-//       from: `"Shipping Portal" <${process.env.EMAIL_USER}>`,
-//       to: shipment.receiverEmail || shipment.receiverName ,
-//       subject: `Your Shipment Details - Tracking #${shipment.trackingNumber}`,
-//       html: `
-//         <h2>Shipment Details</h2>
-//         <p><strong>Tracking Number:</strong> ${shipment.trackingNumber}</p>
-//         <h3>Sender Info</h3>
-//         <p>${shipment.senderName}<br/>
-//         ${shipment.senderAddress1} ${shipment.senderAddress2 || ""}<br/>
-//         ${shipment.senderCity}, ${shipment.senderState} ${shipment.senderZip}<br/>
-//         ${shipment.senderCountry}<br/>
-//         Phone: ${shipment.senderPhone}<br/>
-//         Email: ${shipment.senderEmail}</p>
-//         <h3>Receiver Info</h3>
-//         <p>${shipment.receiverName}<br/>
-//         ${shipment.receiverAddress1} ${shipment.receiverAddress2 || ""}<br/>
-//         ${shipment.receiverCity}, ${shipment.receiverState} ${shipment.receiverZip}<br/>
-//         ${shipment.receiverCountry}<br/>
-//         Phone: ${shipment.receiverPhone}<br/>
-//         Email: ${shipment.receiverEmail}</p>
-//         <h3>Package Info</h3>
-//         <p>Weight: ${shipment.packageWeight} kg<br/>
-//         Dimensions: ${shipment.packageDimensions}<br/>
-//         Description: ${shipment.packageDescription}<br/>
-//         Courier: ${shipment.courier}<br/>
-//         Service: ${shipment.serviceType}</p>
-//       `,
-//     };
-
-//     await transporter.sendMail(mailOptions);
-
-//     res.status(200).json({ message: "Shipment created and email sent!" });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Something went wrong" });
-//   }
-// });
-
-// // Mock tracking endpoint for testing/demo
-// app.get("/api/track/:carrier/:trackingNumber", (req, res) => {
-//   const { carrier, trackingNumber } = req.params;
-
-//   // Sample mock data
-//   const mockData = {
-//     code: 200,
-//     data: {
-//       items: [
-//         {
-//           tracking_number: trackingNumber,
-//           carrier_code: carrier,
-//           status: "in_transit",
-//           origin_info: {
-//             trackinfo: [
-//               {
-//                 StatusDescription: "Shipment created",
-//                 Date: "2025-11-12 09:00",
-//                 Details: "Your shipment has been created",
-//                 Location: "Colombo, Sri Lanka",
-//               },
-//               {
-//                 StatusDescription: "Shipment picked up",
-//                 Date: "2025-11-12 14:00",
-//                 Details: "Package picked up by DHL courier",
-//                 Location: "Colombo, Sri Lanka",
-//               },
-//               {
-//                 StatusDescription: "In Transit",
-//                 Date: "2025-11-13 08:00",
-//                 Details: "Package is on the way to destination",
-//                 Location: "Kandy, Sri Lanka",
-//               },
-//               {
-//                 StatusDescription: "Out for Delivery",
-//                 Date: "2025-11-13 10:00",
-//                 Details: "Package out for delivery",
-//                 Location: "Galle, Sri Lanka",
-//               },
-//               {
-//                 StatusDescription: "Delivered",
-//                 Date: "2025-11-13 12:30",
-//                 Details: "Package delivered to recipient",
-//                 Location: "Galle, Sri Lanka",
-//               },
-//             ],
-//           },
-//         },
-//       ],
-//     },
-//   };
-
-//   res.json(mockData);
-// });
-
-
-// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

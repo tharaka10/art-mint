@@ -89,44 +89,41 @@ const from = (location.state as any)?.from || "/";
 
 
       <div className="bg-gray-900 p-6 rounded-xl mt-4 shadow-lg">
-        {/* IMAGE */}
+   
         <img
           src={nft.image}
           alt={nft.name}
           className="w-full h-96 object-cover rounded-lg"
         />
 
-        {/* BASIC INFO */}
+  
         <h1 className="text-3xl font-bold mt-6">{nft.name}</h1>
         <p className="text-gray-400 text-sm mt-1">Symbol: {nft.symbol}</p>
         <p className="text-gray-300 mt-3">{nft.description}</p>
 
-        {/* DETAILS GRID */}
+   
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 text-sm">
-          <p><strong>Manufacture Date:</strong> {nft.manufactureDate}</p>
-          <p><strong>Expiry Date:</strong> {nft.expiryDate}</p>
-          <p><strong>Weight (per item):</strong> {nft.weight} g</p>
-          <p><strong>Quantity:</strong> {nft.quantity}</p>
+          <p><strong>Mint Address:</strong> {nft.mintAddress}</p>
 
           <p className="sm:col-span-2 break-all">
-            <strong>Owner Wallet:</strong> {nft.owner}
+            <strong>Creater Wallet:</strong> {nft.owner}
           </p>
 
           <p className="sm:col-span-2">
-            <strong>Owner Email:</strong> {nft.email}
+            <strong>Creater Email:</strong> {nft.email}
           </p>
         </div>
 
-        {/* LINKS */}
+       
         <div className="flex flex-col sm:flex-row gap-4 mt-6">
-          <a
+          {/* <a
             href={nft.certificateUrl}
             target="_blank"
             rel="noreferrer"
             className="text-blue-400 underline"
           >
             View Certificate
-          </a>
+          </a> */}
 
           <a
             href={nft.metadataUri}

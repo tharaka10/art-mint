@@ -4,12 +4,8 @@ import axios from "axios";
 import Layout from "./components/Layouts/Layout";
 import Home from "./pages/Home";
 import Notifications from "./pages/Notiication";
-import { ActivityPage } from "./pages/ActivityPage";
 import ProductDetails from "./pages/ProductDetails";
 import About from "./pages/About";
-import Market from "./pages/Market";
-import ProfileSettings from "./components/SettingsPage/ProfileSettings";
-import NotificationSettings from "./components/SettingsPage/NotificationSettings";
 import HowNftsWorks from "./pages/HowNftsWorks";
 import Goods from "./pages/Goods";
 import NFTDetails from "./pages/NFTDetails";
@@ -19,10 +15,6 @@ import ProfileGoods from "./pages/ProfileGoods";
 import NFTOwnershipCheck from "./pages/NFTOwnershipCheck";
 import CreateAuctionHouse from "./pages/CreateAuctionHouse";
 import MyNFTsPage from "./pages/MyNFTsPage";
-import ConfirmMarketplace from "./components/onfirmMarketplace";
-import AdminLogin from "./pages/admin/AdminLogin";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import ProtectedRoute from "./components/Admin/ProtectedRoute";
 
 
 function App() {
@@ -61,25 +53,6 @@ function App() {
         />
         
         <Route
-          path="/confirmmarketplace"
-          element={
-            <Layout>
-              <ConfirmMarketplace />
-            </Layout>
-          }
-        />
-        
-
-      
-          <Route index element={<ProfileSettings />} />
-          <Route path="profile" element={<ProfileSettings />} />
-          <Route
-            path="notificationSettings"
-            element={<NotificationSettings />}
-          />
-       
-
-        <Route
           path="/notifications"
           element={
             <Layout>
@@ -88,23 +61,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/activitypage"
-          element={
-            <Layout>
-              <ActivityPage />
-            </Layout>
-          }
-        />
-
-        <Route
-          path="/market"
-          element={
-            <Layout>
-              <Market />
-            </Layout>
-          }
-        />
+        
         <Route
           path="/productdetails"
           element={
@@ -143,22 +100,6 @@ function App() {
             </Layout>
           }
         />
-
-        <Route
-          path="/profile"
-          element={
-            <Layout>
-              <ProfileSettings />
-            </Layout>
-          }
-        />
-
-// Delivery Portal Routes
-
-        
-        
-// End Delivery Portal Routes
-
        
         <Route
           path="/hownftsworks"
@@ -201,19 +142,7 @@ function App() {
             </Layout>
           }
         />
-        <Route
-
-          path="/admin/login"
-          element={
-              <AdminLogin />
-          } />
-        <Route
-          path="admin/dashboard"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          } />
+       
           <Route
           path="/mynfts"
           element={

@@ -11,7 +11,6 @@ import {
 import { MdAdminPanelSettings, MdOutlineInventory2 } from "react-icons/md";
 import { GiBoxUnpacking, GiPriceTag, GiCargoShip } from "react-icons/gi";
 import { RiCoinsLine } from "react-icons/ri";
-import { FiActivity } from "react-icons/fi";
 import { HiOutlineDocumentText, HiOutlineInformationCircle } from "react-icons/hi";
 
 const SideNav: React.FC = () => {
@@ -35,7 +34,7 @@ const SideNav: React.FC = () => {
                      bg-gradient-to-r from-[#39e0ab] to-[#059669]
                      bg-clip-text text-transparent"
         >
-          NFThrive
+          Art Mint
         </h2>
       </div>
 

@@ -164,7 +164,7 @@ const ProfileGoods: React.FC = () => {
       throw new Error("Invalid price");
     }
 
-    // 1️⃣ Create on-chain listing
+    // Create on-chain listing
     const txOrTradeState = await listNFTOnAuctionHouse(
       wallet as any,
       nft.mintAddress,
@@ -174,7 +174,7 @@ const ProfileGoods: React.FC = () => {
     const txSignature =
       typeof txOrTradeState === "string" ? txOrTradeState : String(txOrTradeState);
 
-    // 2️⃣ Save listing (with image, name, etc.) to Firestore
+    //  Save listing (with image, name, etc.) to Firestore
     const db = getFirestore(app);
     const newListing: ListingData & {
       image?: string;
@@ -196,10 +196,10 @@ const ProfileGoods: React.FC = () => {
       description: nft.description || "",
     };
 
-    // 3️⃣ Add document to Firestore
+    // Add document to Firestore
     const docRef = await addDoc(collection(db, "listings"), newListing);
 
-    // 4️⃣ Update with ID (optional for easy reference)
+    // Update with ID (optional for easy reference)
     await updateDoc(doc(db, "listings", docRef.id), { id: docRef.id });
 
     closeInlineForm();
@@ -288,7 +288,7 @@ const ProfileGoods: React.FC = () => {
                     </div>
                   )}
 
-                  {!listing && (
+                  {/* {!listing && (
                     <button
                       type="button"
                       onClick={() => openInlineForm(nft.mintAddress)}
@@ -298,7 +298,7 @@ const ProfileGoods: React.FC = () => {
                     >
                       <FiTag size={18} aria-hidden="true" />
                     </button>
-                  )}
+                  )} */}
                 </div>
 
                 <h2 className="text-xl font-semibold mt-3">{nft.name}</h2>
@@ -426,9 +426,9 @@ const ProfileGoods: React.FC = () => {
                       </div>
                     )}
 
-                    {!isFormOpen && (
+                    {/* {!isFormOpen && (
                       <p className="text-xs text-gray-500 mt-3 italic text-center">Not listed yet</p>
-                    )}
+                    )} */}
                   </>
                 )}
 

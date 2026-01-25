@@ -1,33 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
-import image1 from "../../assets/sliderHome/kelsey-todd-WxbA7MNQikk-unsplash.jpg";
-import image2 from "../../assets/sliderHome/rashid-New8EgKnSds-unsplash.jpg";
-import image3 from "../../assets/sliderHome/ratul-ghosh-NPrWYa69Mz0-unsplash.jpg";
-import image4 from "../../assets/sliderHome/thlt-lcx-7ZmtUtAArRI-unsplash.jpg";
+import image1 from "../../assets/sliderHome/7950375.jpg";
+import image2 from "../../assets/sliderHome/campbell-3ZUsNJhi_Ik-unsplash.jpg";
+import image3 from "../../assets/sliderHome/gabriel-gurrola-u6BPMXgURuI-unsplash.jpg";
+import image4 from "../../assets/sliderHome/kevin-bhagat-3cLpiv8h5so-unsplash.jpg";
 
 const STATIC_SLIDES = [
   {
     id: 1,
     src: image1,
-    title: "Tokenized Limestone Assets",
-    subtitle: "Sri Lanka’s high-grade limestone deposits now available as digital tokens for global investors"
+    title: "Mint Your Digital Art",
+    subtitle:
+      "Transform your creativity into unique on-chain artworks with secure and seamless minting",
   },
   {
     id: 2,
     src: image2,
-    title: "Ceylon Tea on Blockchain",
-    subtitle: "Premium Sri Lankan tea estates tokenized for secure, transparent international trade"
+    title: "Discover Original Artworks",
+    subtitle:
+      "Explore one-of-one digital creations crafted by emerging and established artists worldwide",
   },
   {
     id: 3,
     src: image3,
-    title: "Ceylon Spices Tokenization",
-    subtitle: "World-renowned cinnamon, cardamom & pepper now tradable as liquid digital assets"
+    title: "Empowering Artists on Blockchain",
+    subtitle:
+      "Full ownership, transparent royalties, and global reach for every digital creator",
   },
   {
     id: 4,
     src: image4,
-    title: "Sri Lankan Gems & Jewels",
-    subtitle: "Blue sapphires, rubies and rare gemstones tokenized for inclusive investment opportunities"
+    title: "Build & Collect Art Collections",
+    subtitle:
+      "Create, showcase, and collect timeless digital art in a decentralized ecosystem",
   },
 ];
 
@@ -71,7 +75,7 @@ const ImageSlider: React.FC = () => {
               transition: "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
-            {/* Background Image */}
+            {/* Background */}
             <div className="absolute inset-0">
               <img
                 src={slide.src}
@@ -82,7 +86,7 @@ const ImageSlider: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
             </div>
 
-            {/* Responsive Content */}
+            {/* Content */}
             <div className="absolute bottom-0 left-0 p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 text-white max-w-5xl">
               <h2
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none mb-3 sm:mb-4 transition-all duration-1000"
@@ -110,34 +114,27 @@ const ImageSlider: React.FC = () => {
         );
       })}
 
-      {/* Professional & Responsive Dot Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 sm:gap-5 sm:mt-10">
+      {/* Dots */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 sm:gap-5">
         {STATIC_SLIDES.map((_, i) => (
           <button
             key={i}
             onClick={() => goToSlide(i)}
-            className="relative group focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded-full"
+            className="relative group focus:outline-none"
             aria-label={`Go to slide ${i + 1}`}
           >
             <div
               className={`w-2 h-2 rounded-full transition-all duration-500 ${
                 i === activeIndex
                   ? "bg-white scale-150 shadow-lg shadow-white/60"
-                  : "bg-white/40 group-hover:bg-white/70 group-hover:scale-110"
+                  : "bg-white/40 group-hover:bg-white/70"
               }`}
             />
-
             {i === activeIndex && (
-              <>
-                <div className="absolute inset-0 w-2 h-2 rounded-full bg-white/50 scale-200 animate-ping" />
-                <div className="absolute -inset-1 rounded-full bg-white/20 scale-0 animate-[scale_0.6s_ease-out_forwards]" />
-              </>
+              <div className="absolute inset-0 w-2 h-2 rounded-full bg-white/50 animate-ping" />
             )}
           </button>
         ))}
-
-        {/* Optional connecting line */}
-        <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-px bg-white/20 -z-10" />
       </div>
     </div>
   );

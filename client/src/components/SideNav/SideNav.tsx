@@ -1,173 +1,238 @@
+// import React, { useState } from "react";
+// import { Link } from "react-router-dom";
+// import {
+//   IoHomeSharp,
+//   // IoNotificationsSharp,
+//   IoSettingsSharp,
+//   IoPersonSharp,
+//   IoChevronDown,
+//   IoChevronForward,
+// } from "react-icons/io5";
+// import { MdAdminPanelSettings, MdOutlineInventory2 } from "react-icons/md";
+// import { GiBoxUnpacking, GiPriceTag, GiCargoShip } from "react-icons/gi";
+// import { RiCoinsLine } from "react-icons/ri";
+// import {
+//   HiOutlineDocumentText,
+//   HiOutlineInformationCircle,
+// } from "react-icons/hi";
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   IoHomeSharp,
-  IoNotificationsSharp,
-  IoSettingsSharp,
+  // IoNotificationsSharp,,
   IoPersonSharp,
   IoChevronDown,
   IoChevronForward,
 } from "react-icons/io5";
-import { MdAdminPanelSettings, MdOutlineInventory2 } from "react-icons/md";
-import { GiBoxUnpacking, GiPriceTag, GiCargoShip } from "react-icons/gi";
+import { GiBoxUnpacking, GiPriceTag} from "react-icons/gi";
 import { RiCoinsLine } from "react-icons/ri";
-import { HiOutlineDocumentText, HiOutlineInformationCircle } from "react-icons/hi";
+import {
+  HiOutlineDocumentText,
+  HiOutlineInformationCircle,
+} from "react-icons/hi";
 
+/* ================================
+   Side Navigation
+================================ */
 const SideNav: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const toggleDropdown = (name: string) => {
-    setOpenDropdown(openDropdown === name ? null : name);
+  const toggleDropdown = (key: string) => {
+    setOpenDropdown((prev) => (prev === key ? null : key));
   };
 
   return (
-    <div
-      className="fixed top-0 left-0 h-screen w-48 bg-black flex flex-col z-50 border-r border-gray-800
-                 overflow-y-auto scrollbar scrollbar-w-2 scrollbar-track-gray-900/50 scrollbar-thumb-rounded-md
-                 scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500 transition-all duration-300"
+    <aside
+      className="
+        fixed top-0 left-0 z-50 h-screen w-48
+        bg-black border-r border-gray-800
+        flex flex-col overflow-y-auto
+        scrollbar scrollbar-w-2
+        scrollbar-track-gray-900/50
+        scrollbar-thumb-gray-600
+        hover:scrollbar-thumb-gray-500
+        transition-all duration-300
+      "
       style={{ scrollbarColor: "#6b7280 #111827" }}
     >
       {/* Logo */}
-      <div className="text-center p-5">
-        <h2
-          className="text-2xl font-bold
-                     bg-gradient-to-r from-[#39e0ab] to-[#059669]
-                     bg-clip-text text-transparent"
-        >
+      <div className="p-5 text-center">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-[#39e0ab] to-[#059669] bg-clip-text text-transparent">
           Art Mint
         </h2>
       </div>
 
-      {/* Menu Title */}
-      <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 px-5">Menu</p>
+      {/* Menu Label */}
+      <p className="px-5 mb-2 text-xs font-bold tracking-widest text-gray-500 uppercase">
+        Menu
+      </p>
 
-      <ul className="space-y-1 flex-1">
-        {/* Home */}
-        <MenuItem icon={<IoHomeSharp className="w-4 h-4" />} label="Home" path="/home" />
+      <ul className="flex-1 space-y-1">
+        <MenuItem icon={<IoHomeSharp />} label="Home" path="/home" />
+        <MenuItem icon={<GiPriceTag />} label="Mint NFTs" path="/mint" />
+        <MenuItem icon={<GiBoxUnpacking />} label="Minted NFTs" path="/goods" />
+        
 
-        {/* Goods */}
-        <MenuItem icon={<GiBoxUnpacking className="w-4 h-4" />} label="Goods" path="/goods" />
+        {/* <MenuItem
+          icon={<MdOutlineInventory2 />}
+          label="Listed NFTs"
+          path="/listednfts"
+        /> */}
 
-        {/* Listed NFTs (main item) */}
-        <MenuItem icon={<MdOutlineInventory2 className="w-4 h-4" />} label="Listed NFTs" path="/listednfts" />
-
-        {/* My NFTs Dropdown */}
-        <Dropdown
+        {/* <Dropdown
           title="My NFTs"
-          icon={<RiCoinsLine className="w-4 h-4" />}
+          icon={<RiCoinsLine />}
+          isOpen={openDropdown === "mynfts"}
+          onClick={() => toggleDropdown("mynfts")}
           items={[
             { label: "My NFTs", path: "/mynfts" },
             { label: "Bought NFTs", path: "/boughtnfts" },
           ]}
-          isOpen={openDropdown === "mynfts"}
-          onClick={() => toggleDropdown("mynfts")}
-        />
+        /> */}
 
-        {/* Sales Dropdown */}
-        <Dropdown
+        <MenuItem icon={<RiCoinsLine />} label="My NFTs" path="/mynfts" />
+
+        {/* <Dropdown
           title="Sales"
-          icon={<GiPriceTag className="w-4 h-4" />}
+          icon={<GiPriceTag />}
+          isOpen={openDropdown === "sales"}
+          onClick={() => toggleDropdown("sales")}
           items={[
             { label: "Sales Page", path: "/sales" },
             { label: "Auction House", path: "/auctionhouse" },
           ]}
-          isOpen={openDropdown === "sales"}
-          onClick={() => toggleDropdown("sales")}
-        />
+        /> */}
 
-        {/* Activity */}
-        {/* <MenuItem icon={<FiActivity className="w-4 h-4" />} label="Activity" path="/activitypage" /> */}
+        {/* <MenuItem
+          icon={<IoNotificationsSharp />}
+          label="Notifications"
+          path="/notifications"
+        /> */}
 
-        {/* Notifications */}
-        <MenuItem icon={<IoNotificationsSharp className="w-4 h-4" />} label="Notifications" path="/notifications" />
-
-        {/* Delivery Dropdown */}
-        <Dropdown
+        {/* <Dropdown
           title="Delivery"
-          icon={<GiCargoShip className="w-4 h-4" />}
+          icon={<GiCargoShip />}
+          isOpen={openDropdown === "delivery"}
+          onClick={() => toggleDropdown("delivery")}
           items={[
             { label: "Tracking View", path: "/trackingview" },
             { label: "Shipping", path: "/shipping" },
             { label: "Delivery Status", path: "/delivery-status" },
           ]}
-          isOpen={openDropdown === "delivery"}
-          onClick={() => toggleDropdown("delivery")}
+        /> */}
+
+        <MenuItem
+          icon={<HiOutlineDocumentText />}
+          label="How NFTs Work"
+          path="/hownftsworks"
         />
 
-        {/* How NFTs Work */}
-        <MenuItem icon={<HiOutlineDocumentText className="w-4 h-4" />} label="How NFTs Work" path="/hownftsworks" />
+        <MenuItem
+          icon={<HiOutlineInformationCircle />}
+          label="About"
+          path="/about"
+        />
 
-        {/* About */}
-        <MenuItem icon={<HiOutlineInformationCircle className="w-4 h-4" />} label="About" path="/about" />
-
-        {/* Profile Dropdown */}
         <Dropdown
           title="Profile"
-          icon={<IoPersonSharp className="w-4 h-4" />}
-          items={[
-            { label: "My Profile", path: "/user" },
-            // { label: "Profile Settings", path: "/profile" },
-            { label: "My Goods", path: "/mygoods" },
-          ]}
+          icon={<IoPersonSharp />}
           isOpen={openDropdown === "profile"}
           onClick={() => toggleDropdown("profile")}
+          items={[
+            { label: "My Profile", path: "/user" },
+            { label: "My Goods", path: "/mygoods" },
+          ]}
         />
 
-        {/* Settings Dropdown */}
-        <Dropdown
+        {/* <Dropdown
           title="Settings"
-          icon={<IoSettingsSharp className="w-4 h-4" />}
-          items={[
-            { label: "Profile Settings", path: "/settings/profile" },
-            { label: "Notification Settings", path: "/settings/notificationSettings" },
-          ]}
+          icon={<IoSettingsSharp />}
           isOpen={openDropdown === "settings"}
           onClick={() => toggleDropdown("settings")}
-        />
+          items={[
+            { label: "Profile Settings", path: "/settings/profile" },
+            {
+              label: "Notification Settings",
+              path: "/settings/notificationSettings",
+            },
+          ]}
+        /> */}
 
-        {/* Admin Login */}
-        <MenuItem icon={<MdAdminPanelSettings className="w-4 h-4" />} label="Admin Login" path="/admin/login" />
+        {/* <MenuItem
+          icon={<MdAdminPanelSettings />}
+          label="Admin Login"
+          path="/admin/login"
+        /> */}
       </ul>
-    </div>
+    </aside>
   );
 };
 
-/* Reusable Single Menu Item */
-const MenuItem = ({ icon, label, path }: { icon: React.ReactNode; label: string; path: string }) => (
+/* ================================
+   Reusable Menu Item
+================================ */
+interface MenuItemProps {
+  icon: React.ReactNode;
+  label: string;
+  path: string;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({ icon, label, path }) => (
   <li>
     <Link
       to={path}
-      className="flex items-center p-2.5 rounded-lg hover:bg-gray-800/80 text-gray-300 hover:text-white transition-all duration-200 group"
+      className="
+        group flex items-center p-2.5 rounded-lg
+        text-gray-300 hover:text-white
+        hover:bg-gray-800/80
+        transition-all duration-200
+      "
     >
-      <div className="w-8 flex justify-center text-gray-500 group-hover:text-white transition-colors">{icon}</div>
+      <div className="w-8 flex justify-center text-gray-500 group-hover:text-white">
+        {icon}
+      </div>
       <span className="ml-3 text-xs font-medium">{label}</span>
     </Link>
   </li>
 );
 
-/* Reusable Dropdown Component */
-const Dropdown = ({
-  title,
-  icon,
-  items,
-  isOpen,
-  onClick,
-}: {
+/* ================================
+   Reusable Dropdown
+================================ */
+interface DropdownProps {
   title: string;
   icon: React.ReactNode;
   items: { label: string; path: string }[];
   isOpen: boolean;
   onClick: () => void;
+}
+
+const Dropdown: React.FC<DropdownProps> = ({
+  title,
+  icon,
+  items,
+  isOpen,
+  onClick,
 }) => (
   <li>
     <button
+      type="button"
       onClick={onClick}
-      className="flex items-center justify-between w-full p-2.5 rounded-lg hover:bg-gray-800/80 text-gray-300 hover:text-white transition-all duration-200 group"
+      className="
+        group flex w-full items-center justify-between p-2.5 rounded-lg
+        text-gray-300 hover:text-white
+        hover:bg-gray-800/80
+        transition-all duration-200
+      "
     >
       <div className="flex items-center">
-        <div className="w-8 flex justify-center text-gray-500 group-hover:text-white transition-colors">{icon}</div>
+        <div className="w-8 flex justify-center text-gray-500 group-hover:text-white">
+          {icon}
+        </div>
         <span className="ml-3 text-xs font-medium">{title}</span>
       </div>
+
       {isOpen ? (
         <IoChevronDown className="w-3.5 h-3.5 text-gray-500" />
       ) : (
@@ -176,14 +241,18 @@ const Dropdown = ({
     </button>
 
     {isOpen && (
-      <ul className="ml-10 mt-1 space-y-0.5 border-l border-gray-700 pl-3">
-        {items.map((item, i) => (
-          <li key={i}>
+      <ul className="mt-1 ml-10 space-y-0.5 border-l border-gray-700 pl-3">
+        {items.map(({ label, path }) => (
+          <li key={path}>
             <Link
-              to={item.path}
-              className="block py-1.5 px-2 text-xs text-gray-400 hover:text-white hover:bg-gray-800/60 rounded-md transition-all duration-200"
+              to={path}
+              className="
+                block px-2 py-1.5 rounded-md text-xs text-gray-400
+                hover:text-white hover:bg-gray-800/60
+                transition-all duration-200
+              "
             >
-              {item.label}
+              {label}
             </Link>
           </li>
         ))}

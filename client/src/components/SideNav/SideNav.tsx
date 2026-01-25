@@ -58,7 +58,9 @@ const SideNav: React.FC = () => {
     >
       {/* Logo */}
       <div className="p-5 text-center">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-[#39e0ab] to-[#059669] bg-clip-text text-transparent">
+        <h2 className="text-2xl font-bold
+                       bg-gradient-to-r from-purple-400 to-pink-500
+                       bg-clip-text text-transparent">
           Art Mint
         </h2>
       </div>

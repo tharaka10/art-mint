@@ -60,7 +60,7 @@ const ImageSlider: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[80vh] max-h-[500px] min-h-[400px] overflow-hidden bg-black select-none">
+    <div className="relative w-full h-[80vh] max-h-[500px] min-h-[400px] overflow-hidden bg-black select-none rounded-2xl shadow-xl">
       {/* Slides */}
       {STATIC_SLIDES.map((slide, i) => {
         const offset = i - activeIndex;
@@ -89,7 +89,8 @@ const ImageSlider: React.FC = () => {
             {/* Content */}
             <div className="absolute bottom-0 left-0 p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 text-white max-w-5xl">
               <h2
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none mb-3 sm:mb-4 transition-all duration-1000"
+                className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none mb-3 sm:mb-4
+                            bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent transition-all duration-1000`}
                 style={{
                   opacity: isActive ? 1 : 0,
                   transform: isActive ? "translateY(0)" : "translateY(40px)",
@@ -100,7 +101,7 @@ const ImageSlider: React.FC = () => {
               </h2>
 
               <p
-                className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/40 font-light mb-6 sm:mb-8 max-w-3xl transition-all duration-1000"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/60 font-light mb-6 sm:mb-8 max-w-3xl transition-all duration-1000"
                 style={{
                   opacity: isActive ? 1 : 0,
                   transform: isActive ? "translateY(0)" : "translateY(30px)",
@@ -124,14 +125,14 @@ const ImageSlider: React.FC = () => {
             aria-label={`Go to slide ${i + 1}`}
           >
             <div
-              className={`w-2 h-2 rounded-full transition-all duration-500 ${
+              className={`w-3 h-3 rounded-full transition-all duration-500 ${
                 i === activeIndex
-                  ? "bg-white scale-150 shadow-lg shadow-white/60"
+                  ? "bg-gradient-to-r from-purple-400 to-pink-500 scale-150 shadow-lg shadow-pink-500/60"
                   : "bg-white/40 group-hover:bg-white/70"
               }`}
             />
             {i === activeIndex && (
-              <div className="absolute inset-0 w-2 h-2 rounded-full bg-white/50 animate-ping" />
+              <div className="absolute inset-0 w-3 h-3 rounded-full animate-ping bg-gradient-to-r from-purple-400 to-pink-500/50" />
             )}
           </button>
         ))}

@@ -48,7 +48,7 @@ const Goods: React.FC = () => {
 
       {loading ? (
         <div className="flex justify-center mt-20">
-          <LifeLine color="#A78BFA" size="large" /> {/* Using purple gradient color */}
+          <LifeLine color="#A78BFA" size="large" /> 
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

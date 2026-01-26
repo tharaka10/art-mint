@@ -10,9 +10,6 @@ import { GiBoxUnpacking, GiPriceTag } from "react-icons/gi";
 import { RiCoinsLine } from "react-icons/ri";
 import { HiOutlineDocumentText, HiOutlineInformationCircle } from "react-icons/hi";
 
-/* ================================
-   Side Navigation
-================================ */
 const SideNav: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -56,7 +53,7 @@ const SideNav: React.FC = () => {
         <MenuItem icon={<IoHomeSharp />} label="Home" path="/home" />
         <MenuItem icon={<GiPriceTag />} label="Mint NFTs" path="/mint" />
         <MenuItem icon={<GiBoxUnpacking />} label="Minted NFTs" path="/goods" />
-        <MenuItem icon={<RiCoinsLine />} label="My NFTs" path="/mynfts" />
+        <MenuItem icon={<RiCoinsLine />} label="My NFTs" path="/mygoods" />
         <MenuItem icon={<HiOutlineDocumentText />} label="How NFTs Work" path="/hownftsworks" />
         <MenuItem icon={<HiOutlineInformationCircle />} label="About" path="/about" />
 
@@ -75,9 +72,6 @@ const SideNav: React.FC = () => {
   );
 };
 
-/* ================================
-   Reusable Menu Item
-================================ */
 interface MenuItemProps {
   icon: React.ReactNode;
   label: string;
@@ -103,9 +97,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, label, path }) => (
   </li>
 );
 
-/* ================================
-   Reusable Dropdown
-================================ */
+
 interface DropdownProps {
   title: string;
   icon: React.ReactNode;

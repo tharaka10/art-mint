@@ -14,20 +14,18 @@ const MintForm: React.FC = () => {
   const [minting, setMinting] = useState(false);
 
   const [form, setForm] = useState({
-  name: "",
-  symbol: "",
-  description: "",
-  email: "",
-  
-});
-
+    name: "",
+    symbol: "",
+    description: "",
+    email: "",
+  });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [mintAddress, setMintAddress] = useState<string | null>(null);
 
   const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
-  /** Upload to Pinata: Image */
+  /** Upload image to Pinata */
   const uploadToPinata = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -81,17 +79,8 @@ const MintForm: React.FC = () => {
 
   /** Mint NFT */
   const handleMint = async () => {
-    if (!wallet.publicKey) {
-      toast.error("Connect your wallet first!");
-      return;
-    }
-
-    if (!imageFile) {
-      toast.error("Please upload an image");
-      return;
-    }
-
-    
+    if (!wallet.publicKey) return toast.error("Connect your wallet first!");
+    if (!imageFile) return toast.error("Please upload an image");
 
     try {
       setMinting(true);
@@ -109,7 +98,6 @@ const MintForm: React.FC = () => {
 
       const metaplex = Metaplex.make(connection).use(walletAdapterIdentity(wallet));
 
-      /** MINT NFT HERE */
       const { nft } = await metaplex.nfts().create({
         uri: metadataUri,
         name: form.name,
@@ -123,27 +111,19 @@ const MintForm: React.FC = () => {
       toast.dismiss();
       toast.success("🎉 NFT Minted Successfully!");
 
-      /** Save NFT to Firestore */
       await addDoc(collection(db, "nfts"), {
-  mintAddress: mintStr,
-  name: form.name,
-  symbol: form.symbol,
-  description: form.description,
-  image: imageUrl,
-  metadataUri,
-  email: form.email,
-  owner: wallet.publicKey.toBase58(),
-  createdAt: serverTimestamp(),
-});
-
-
-      /** Reset form */
-      setForm({
-        name: "",
-        symbol: "",
-        description: "",
-        email: "",
+        mintAddress: mintStr,
+        name: form.name,
+        symbol: form.symbol,
+        description: form.description,
+        image: imageUrl,
+        metadataUri,
+        email: form.email,
+        owner: wallet.publicKey.toBase58(),
+        createdAt: serverTimestamp(),
       });
+
+      setForm({ name: "", symbol: "", description: "", email: "" });
       setImageFile(null);
     } catch (err: any) {
       toast.dismiss();
@@ -155,88 +135,78 @@ const MintForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-6">
+    <div className="min-h-screen bg-gray-950 text-white p-6 flex flex-col items-center">
       <Toaster position="top-right" />
-      <h2 className="text-3xl font-bold mb-4 text-center">Mint New NFT</h2>
 
-      <div className="max-w-lg mx-auto space-y-3 bg-gray-900 p-6 rounded-xl shadow">
+      {/* Heading with gradient */}
+      <h2 className="text-3xl md:text-4xl font-bold mb-6
+                     bg-gradient-to-r from-purple-400 to-pink-500
+                     bg-clip-text text-transparent text-center">
+        Mint Your NFT
+      </h2>
 
-        {/* NAME */}
-        <label>Name</label>
+      <div className="w-full max-w-lg space-y-4 bg-gray-900 p-6 rounded-2xl shadow-lg">
+
+        {/* Form Fields */}
+        <label className="font-semibold text-gray-300">Name</label>
         <input
-          placeholder="Product name"
-          aria-label="Product name"
-          className="w-full p-2 bg-gray-800 rounded"
+          placeholder="NFT name"
+          className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
 
-        {/* SYMBOL */}
-        <label>Symbol</label>
+        <label className="font-semibold text-gray-300">Symbol</label>
         <input
           placeholder="NFT symbol"
-          aria-label="NFT symbol"
-          className="w-full p-2 bg-gray-800 rounded"
+          className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
           value={form.symbol}
           onChange={(e) => setForm({ ...form, symbol: e.target.value })}
         />
 
-        {/* DESCRIPTION */}
-        <label>Description</label>
+        <label className="font-semibold text-gray-300">Description</label>
         <input
-          placeholder="Description"
-          aria-label="Description"
-          className="w-full p-2 bg-gray-800 rounded"
+          placeholder="NFT description"
+          className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
-        
 
-        {/* EMAIL */}
-<label>Email</label>
-<input
-  type="email"
-  placeholder="Owner's Email"
-  aria-label="Owner email"
-  className="w-full p-2 bg-gray-800 rounded"
-  value={form.email}
-  onChange={(e) => setForm({ ...form, email: e.target.value })}
-/>
+        <label className="font-semibold text-gray-300">Email</label>
+        <input
+          type="email"
+          placeholder="Owner's email"
+          className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
 
-
-       
-
-        
-
-        
-        
-
-        {/* IMAGE UPLOAD */}
-        <label>Product Image</label>
+        <label className="font-semibold text-gray-300">NFT Image</label>
         <input
           type="file"
           accept="image/*"
-          aria-label="product image upload"
-          className="w-full text-sm bg-gray-800 rounded"
+          className="w-full text-sm bg-gray-800 rounded-lg border border-gray-700 p-2"
           onChange={(e) => setImageFile(e.target.files?.[0] || null)}
         />
 
-        {/* BUTTON */}
+        {/* Mint Button */}
         <button
           onClick={handleMint}
           disabled={minting}
-          className="w-full bg-green-600 py-2 rounded mt-3"
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-400 to-pink-500
+                     font-bold text-black hover:opacity-90 transition duration-300"
         >
           {minting ? "Minting..." : "Mint NFT"}
         </button>
 
+        {/* Mint Result */}
         {mintAddress && (
-          <div className="mt-4 text-center">
-            <p className="text-green-400 font-semibold">Minted:</p>
+          <div className="mt-4 text-center space-y-1">
+            <p className="text-green-400 font-semibold">Minted successfully:</p>
             <a
-              className="underline text-blue-400"
               href={`https://explorer.solana.com/address/${mintAddress}?cluster=devnet`}
               target="_blank"
+              className="underline text-blue-400 break-all"
             >
               {mintAddress}
             </a>

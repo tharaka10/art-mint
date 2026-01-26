@@ -68,44 +68,40 @@ const MyNFTsPage: React.FC = () => {
   const [nfts, setNfts] = useState<NFTItem[]>([]);
   const [loading, setLoading] = useState(false);
 
-const fetchMyNFTs = async () => {
-  if (!wallet.publicKey) {
-    toast.error("Please connect your wallet first!");
-    return;
-  }
-
-  try {
-    setLoading(true);
-
-    const network = import.meta.env.VITE_NETWORK || "devnet";
-
-    // 🧩 Fix: Always build a full clean URL with params
-    const endpoint = `${import.meta.env.VITE_SHYFT_ENDPOINT}/nft/read_all`
-      .replace(/([^:]\/)\/+/g, "$1");
-
-    const url = `${endpoint}?network=${network}&address=${wallet.publicKey.toBase58()}`;
-    console.log("🔗 Fetching:", url);
-
-    const res = await axios.get(url, {
-      headers: {
-        "x-api-key": import.meta.env.VITE_SHYFT_API_KEY!,
-      },
-    });
-
-    if (res.data.success) {
-      setNfts(res.data.result);
-      toast.success("✅ NFTs loaded successfully!");
-    } else {
-      toast.error(res.data.message || "Failed to load NFTs");
+  const fetchMyNFTs = async () => {
+    if (!wallet.publicKey) {
+      toast.error("Please connect your wallet first!");
+      return;
     }
-  } catch (error: any) {
-    console.error("❌ Fetch error:", error.response?.data || error.message);
-    toast.error("Error fetching NFTs");
-  } finally {
-    setLoading(false);
-  }
-};
 
+    try {
+      setLoading(true);
+
+      const network = import.meta.env.VITE_NETWORK || "devnet";
+      const endpoint = `${import.meta.env.VITE_SHYFT_ENDPOINT}/nft/read_all`
+        .replace(/([^:]\/)\/+/g, "$1");
+
+      const url = `${endpoint}?network=${network}&address=${wallet.publicKey.toBase58()}`;
+
+      const res = await axios.get(url, {
+        headers: {
+          "x-api-key": import.meta.env.VITE_SHYFT_API_KEY!,
+        },
+      });
+
+      if (res.data.success) {
+        setNfts(res.data.result);
+        toast.success("NFTs loaded successfully ✨");
+      } else {
+        toast.error(res.data.message || "Failed to load NFTs");
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error("Error fetching NFTs");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (wallet.connected) {
@@ -114,46 +110,75 @@ const fetchMyNFTs = async () => {
   }, [wallet.connected]);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-6">
+    <div className="min-h-screen bg-[#0F0F0F] text-white px-6 py-10">
       <Toaster position="top-right" />
-      <h1 className="text-3xl font-bold text-center mb-6">My NFTs</h1>
 
+      {/* Page Title */}
+      <h1
+        className="text-3xl md:text-4xl font-bold text-center mb-10
+                   bg-gradient-to-r from-purple-400 to-pink-500
+                   bg-clip-text text-transparent"
+      >
+        My NFT Collection
+      </h1>
+
+      {/* Loading */}
       {loading && (
-        // <div className="text-center text-gray-400">Loading your NFTs...</div>
-        <div className="flex items-center justify-center w-full h-full">
-          <LifeLine color="green-400" size="medium" text="" textColor="" />
+        <div className="flex flex-col items-center justify-center mt-20">
+          <LifeLine color="purple" size="medium" />
+          <p className="text-gray-400 mt-4">Loading your NFTs…</p>
         </div>
       )}
 
+      {/* Empty State */}
       {!loading && nfts.length === 0 && (
-        <p className="text-center text-gray-400 mt-10">
+        <p className="text-center text-gray-500 mt-20">
           You don’t own any NFTs yet.
         </p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      {/* NFT Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {nfts.map((nft, idx) => (
           <div
             key={idx}
-            className="bg-gray-900 rounded-2xl shadow-lg p-4 transition hover:scale-105"
+            className="group bg-[#1C1C1C] border border-[#2A2A2A]
+                       rounded-2xl overflow-hidden
+                       transition-all duration-300
+                       hover:-translate-y-1 hover:shadow-xl hover:border-white/30"
           >
-            <img
-              src={nft.image_uri}
-              alt={nft.name}
-              className="rounded-xl w-full h-60 object-cover"
-            />
-            <h2 className="text-xl font-semibold mt-3">{nft.name}</h2>
-            <p className="text-gray-400 text-sm mt-1">
-              {nft.description?.slice(0, 80)}...
-            </p>
+            {/* Image */}
+            <div className="relative aspect-square overflow-hidden">
+              <img
+                src={nft.image_uri}
+                alt={nft.name}
+                className="w-full h-full object-cover
+                           transition-transform duration-300
+                           group-hover:scale-105"
+              />
+            </div>
 
-            
+            {/* Info */}
+            <div className="p-5">
+              <h2
+                className="text-lg font-semibold mb-1
+                           bg-gradient-to-r from-purple-400 to-pink-500
+                           bg-clip-text text-transparent"
+              >
+                {nft.name || "Untitled NFT"}
+              </h2>
+
+              <p className="text-sm text-gray-400 line-clamp-3">
+                {nft.description || "No description provided."}
+              </p>
+
+              <p className="text-xs text-gray-500 mt-3 truncate">
+                Mint: {nft.mint}
+              </p>
+            </div>
           </div>
         ))}
       </div>
-
-      {/* Modal: List For Sale */}
-     
     </div>
   );
 };

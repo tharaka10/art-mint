@@ -21,12 +21,12 @@ const Profile: React.FC = () => {
     <div className="flex-1 h-full text-center p-5">
       <ProfileDashboard />
 
-      <button
+      {/* <button
         onClick={() => setShowKycModal(true)}
         className="mt-10 bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
       >
         Start KYC
-      </button>
+      </button> */}
 
       {/* KYC Modal */}
       {showKycModal && (

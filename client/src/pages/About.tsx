@@ -8,7 +8,9 @@ const About: React.FC = () => {
 
         {/* Title */}
         <div className="text-center">
-          <h1 className="text-5xl font-extrabold text-emerald-500 tracking-wide">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent tracking-wide">
             ABOUT Art Mint
           </h1>
           <p className="mt-4 text-gray-400 text-lg leading-relaxed">
@@ -17,8 +19,10 @@ const About: React.FC = () => {
         </div>
 
         {/* Section: How NFTs Work */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-md border border-gray-800">
-          <h2 className="text-3xl font-bold text-emerald-500 flex items-center gap-2">
+        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
+          <h2 className="text-3xl font-bold flex items-center gap-2
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent">
             <FaGem /> How NFTs Work
           </h2>
           <p className="mt-4 text-gray-400 leading-relaxed">
@@ -27,8 +31,10 @@ const About: React.FC = () => {
         </section>
 
         {/* Section: What Makes an NFT Unique */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-md border border-gray-800">
-          <h2 className="text-3xl font-bold text-emerald-500 flex items-center gap-2">
+        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
+          <h2 className="text-3xl font-bold flex items-center gap-2
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent">
             <FaGem /> What Makes an NFT Unique
           </h2>
           <p className="mt-4 text-gray-400 leading-relaxed">
@@ -37,8 +43,10 @@ const About: React.FC = () => {
         </section>
 
         {/* Section: How NFTs Are Created */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-md border border-gray-800">
-          <h2 className="text-3xl font-bold text-emerald-500 flex items-center gap-2">
+        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
+          <h2 className="text-3xl font-bold flex items-center gap-2
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent">
             <FaGem /> How NFTs Are Created
           </h2>
           <p className="mt-4 text-gray-400 leading-relaxed">
@@ -55,8 +63,10 @@ const About: React.FC = () => {
         </section>
 
         {/* Section: How Do You Own an NFT */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-md border border-gray-800">
-          <h2 className="text-3xl font-bold text-emerald-500 flex items-center gap-2">
+        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
+          <h2 className="text-3xl font-bold flex items-center gap-2
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent">
             <FaGem /> How Do You Own an NFT
           </h2>
           <p className="mt-4 text-gray-400 leading-relaxed">
@@ -71,8 +81,10 @@ const About: React.FC = () => {
         </section>
 
         {/* Section: Why This Technology Is Valuable */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-md border border-gray-800">
-          <h2 className="text-3xl font-bold text-emerald-500 flex items-center gap-2">
+        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
+          <h2 className="text-3xl font-bold flex items-center gap-2
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent">
             <FaGem /> Why This Technology Is Valuable
           </h2>
           <p className="mt-4 text-gray-400 leading-relaxed">

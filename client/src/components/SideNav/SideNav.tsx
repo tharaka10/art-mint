@@ -1,21 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   IoHomeSharp,
   IoPersonSharp,
-  IoChevronDown,
-  IoChevronForward,
 } from "react-icons/io5";
 import { GiBoxUnpacking, GiPriceTag } from "react-icons/gi";
 import { RiCoinsLine } from "react-icons/ri";
 import { HiOutlineDocumentText, HiOutlineInformationCircle } from "react-icons/hi";
 
 const SideNav: React.FC = () => {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-  const toggleDropdown = (key: string) => {
-    setOpenDropdown((prev) => (prev === key ? null : key));
-  };
 
   return (
     <aside
@@ -40,7 +33,7 @@ const SideNav: React.FC = () => {
             bg-clip-text text-transparent
           "
         >
-          Art Mint
+          ArtMint
         </h2>
       </div>
 
@@ -56,17 +49,7 @@ const SideNav: React.FC = () => {
         <MenuItem icon={<RiCoinsLine />} label="My NFTs" path="/mygoods" />
         <MenuItem icon={<HiOutlineDocumentText />} label="How NFTs Work" path="/hownftsworks" />
         <MenuItem icon={<HiOutlineInformationCircle />} label="About" path="/about" />
-
-        <Dropdown
-          title="Profile"
-          icon={<IoPersonSharp />}
-          isOpen={openDropdown === "profile"}
-          onClick={() => toggleDropdown("profile")}
-          items={[
-            { label: "My Profile", path: "/user" },
-            { label: "My Goods", path: "/mygoods" },
-          ]}
-        />
+        <MenuItem icon={<IoPersonSharp />} label="profile" path="/user" />
       </ul>
     </aside>
   );
@@ -98,59 +81,6 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, label, path }) => (
 );
 
 
-interface DropdownProps {
-  title: string;
-  icon: React.ReactNode;
-  items: { label: string; path: string }[];
-  isOpen: boolean;
-  onClick: () => void;
-}
 
-const Dropdown: React.FC<DropdownProps> = ({ title, icon, items, isOpen, onClick }) => (
-  <li>
-    <button
-      type="button"
-      onClick={onClick}
-      className="
-        group flex w-full items-center justify-between p-2.5 rounded-lg
-        text-gray-300 hover:text-white
-        hover:bg-gray-800/60
-        transition-all duration-200
-      "
-    >
-      <div className="flex items-center">
-        <div className="w-8 flex justify-center text-gray-500 group-hover:text-white">
-          {icon}
-        </div>
-        <span className="ml-3 text-xs font-medium">{title}</span>
-      </div>
-
-      {isOpen ? (
-        <IoChevronDown className="w-3.5 h-3.5 text-gray-500" />
-      ) : (
-        <IoChevronForward className="w-3.5 h-3.5 text-gray-500" />
-      )}
-    </button>
-
-    {isOpen && (
-      <ul className="mt-1 ml-10 space-y-0.5 border-l border-gray-700 pl-3">
-        {items.map(({ label, path }) => (
-          <li key={path}>
-            <Link
-              to={path}
-              className="
-                block px-2 py-1.5 rounded-md text-xs text-gray-400
-                hover:text-white hover:bg-gray-800/50
-                transition-all duration-200
-              "
-            >
-              {label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    )}
-  </li>
-);
 
 export default SideNav;

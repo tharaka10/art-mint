@@ -4,7 +4,7 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-[#0F0F0F] border-b border-gray-700 px-5 py-3 flex items-center justify-between shadow-sm">
+    <header className="bg-[#000000] border-b border-gray-700 px-5 py-3 flex items-center justify-between shadow-sm">
       {/* Search Bar */}
       <div className="flex items-center w-full max-w-md px-3 py-1.5 rounded-lg bg-[#1C1C1C] border border-gray-700 text-sm text-white shadow-md transition-all hover:shadow-lg">
         <FiSearch className="text-gray-400 mr-3" />

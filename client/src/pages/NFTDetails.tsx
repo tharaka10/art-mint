@@ -64,7 +64,7 @@ const from = (location.state as any)?.from || "/";
   if (loading) {
     return (
       <div className="flex justify-center mt-20">
-        <LifeLine color="green-400" />
+        <LifeLine color="#A78BFA" size="large" />
       </div>
     );
   }

@@ -135,7 +135,7 @@ const MintForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-6 flex flex-col items-center">
+    <div className="min-h-screen bg-black text-white p-6 flex flex-col items-center">
       <Toaster position="top-right" />
 
       {/* Heading with gradient */}

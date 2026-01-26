@@ -2,96 +2,72 @@ import React from "react";
 import { FaGem } from "react-icons/fa";
 
 const About: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-[#0a0a0a] text-gray-300 px-6 py-12 flex justify-center">
-      <div className="max-w-4xl w-full space-y-10">
+  const sections = [
+    {
+      title: "How NFTs Work",
+      content:
+        "NFTs (Non-Fungible Tokens) are unique digital assets stored on the blockchain. Unlike cryptocurrencies, each NFT represents a one-of-a-kind creation like art, collectibles, or digital luxury items.",
+    },
+    {
+      title: "What Makes an NFT Unique",
+      content:
+        "Each NFT contains immutable metadata proving originality and ownership. They are impossible to forge and fully traceable on the blockchain, providing a verified digital certificate of authenticity.",
+    },
+    {
+      title: "How NFTs Are Created",
+      content:
+        "NFTs are minted via smart contracts, permanently linking the asset to the creator. During minting:\n- A unique token is generated\n- Ownership is recorded on a public ledger\n- It is permanently linked to the creator",
+    },
+    {
+      title: "Owning an NFT",
+      content:
+        "Purchasing an NFT gives verified ownership. You can:\n- Store it in your wallet\n- Resell on marketplaces\n- Showcase in galleries\n- Hold it as a collectible asset",
+    },
+    {
+      title: "Why This Technology Matters",
+      content:
+        "NFTs empower creators to protect their work while giving buyers provable ownership. Platforms like Art Mint merge art, luxury, and technology into a secure and valuable experience.",
+    },
+  ];
 
-        {/* Title */}
-        <div className="text-center">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4
+  return (
+    <div className="min-h-screen bg-[#000000] text-gray-300 px-6 py-20">
+      <div className="max-w-6xl mx-auto space-y-16">
+
+        {/* Hero */}
+        <header className="text-center max-w-3xl mx-auto">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-6
                          bg-gradient-to-r from-purple-400 to-pink-500
                          bg-clip-text text-transparent tracking-wide">
-            ABOUT Art Mint
+            About Art Mint
           </h1>
-          <p className="mt-4 text-gray-400 text-lg leading-relaxed">
-            Art Mint empowers creators and collectors with unique digital assets on the blockchain, combining art, luxury, and technology.
+          <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
+            Art Mint empowers creators and collectors with unique digital assets on the blockchain, blending art, luxury, and modern technology.
           </p>
+        </header>
+
+        {/* Sections */}
+        <div className="grid gap-12">
+          {sections.map((section, idx) => (
+            <div
+              key={idx}
+              className="relative bg-[#111111] p-8 rounded-3xl border border-gray-800
+                         hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <FaGem className="text-purple-400 text-2xl" />
+                <h2 className="text-3xl font-bold text-white
+                               bg-gradient-to-r from-purple-400 to-pink-500
+                               bg-clip-text">
+                  {section.title}
+                </h2>
+              </div>
+              <p className="text-gray-400 leading-relaxed whitespace-pre-line">
+                {section.content}
+              </p>
+            </div>
+          ))}
         </div>
-
-        {/* Section: How NFTs Work */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
-          <h2 className="text-3xl font-bold flex items-center gap-2
-                         bg-gradient-to-r from-purple-400 to-pink-500
-                         bg-clip-text text-transparent">
-            <FaGem /> How NFTs Work
-          </h2>
-          <p className="mt-4 text-gray-400 leading-relaxed">
-            NFTs, or Non-Fungible Tokens, are one-of-a-kind digital assets stored on the blockchain. Unlike cryptocurrencies like Bitcoin or Ethereum, NFTs cannot be exchanged on a one-to-one basis. They represent unique creations like art, music, collectibles, or luxury-inspired digital jewelry.
-          </p>
-        </section>
-
-        {/* Section: What Makes an NFT Unique */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
-          <h2 className="text-3xl font-bold flex items-center gap-2
-                         bg-gradient-to-r from-purple-400 to-pink-500
-                         bg-clip-text text-transparent">
-            <FaGem /> What Makes an NFT Unique
-          </h2>
-          <p className="mt-4 text-gray-400 leading-relaxed">
-            Each NFT has unique metadata proving its originality and ownership. They are impossible to forge and easily traceable on the blockchain. Every piece has a digital certificate of authenticity.
-          </p>
-        </section>
-
-        {/* Section: How NFTs Are Created */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
-          <h2 className="text-3xl font-bold flex items-center gap-2
-                         bg-gradient-to-r from-purple-400 to-pink-500
-                         bg-clip-text text-transparent">
-            <FaGem /> How NFTs Are Created
-          </h2>
-          <p className="mt-4 text-gray-400 leading-relaxed">
-            NFTs are minted via smart contracts, linking the digital asset permanently to the creator. During minting:
-          </p>
-          <ul className="list-disc list-inside mt-3 text-gray-400 leading-relaxed space-y-1">
-            <li>A unique token is generated</li>
-            <li>Ownership is recorded on a public ledger</li>
-            <li>It is permanently linked to the creator</li>
-          </ul>
-          <p className="mt-3 text-gray-400 leading-relaxed">
-            At MintedGold, we mint each NFT carefully to ensure every piece has artistic distinction and real digital value.
-          </p>
-        </section>
-
-        {/* Section: How Do You Own an NFT */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
-          <h2 className="text-3xl font-bold flex items-center gap-2
-                         bg-gradient-to-r from-purple-400 to-pink-500
-                         bg-clip-text text-transparent">
-            <FaGem /> How Do You Own an NFT
-          </h2>
-          <p className="mt-4 text-gray-400 leading-relaxed">
-            Buying an NFT grants ownership rights to the digital asset. Ownership is secured by the blockchain and allows you to:
-          </p>
-          <ul className="list-disc list-inside mt-3 text-gray-400 leading-relaxed space-y-1">
-            <li>View it in your wallet</li>
-            <li>Resell on NFT marketplaces</li>
-            <li>Showcase in virtual galleries</li>
-            <li>Hold it as a collectible asset</li>
-          </ul>
-        </section>
-
-        {/* Section: Why This Technology Is Valuable */}
-        <section className="bg-[#111111] p-6 rounded-2xl shadow-lg border border-gray-800 hover:shadow-pink-500/30 transition">
-          <h2 className="text-3xl font-bold flex items-center gap-2
-                         bg-gradient-to-r from-purple-400 to-pink-500
-                         bg-clip-text text-transparent">
-            <FaGem /> Why This Technology Is Valuable
-          </h2>
-          <p className="mt-4 text-gray-400 leading-relaxed">
-            NFTs empower creators to protect their work and provide buyers with proof of authenticity, ownership, and rarity. Brands like MintedGold use NFTs to merge art, luxury, and modern technology into a secure, timeless experience.
-          </p>
-        </section>
-
       </div>
     </div>
   );

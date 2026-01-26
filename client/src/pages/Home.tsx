@@ -115,13 +115,13 @@ const Home: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#0F0F0F] text-white">
+    <div className="min-h-screen bg-[#000000] text-white">
       {/* Hero */}
       <div className="px-5 pt-5 pb-8">
         <ImageSlider />
       </div>
 
-      <div className="px-5 py-5 max-w-[1400px] mx-auto space-y-24">
+      <div className="py-5 max-w-[1400px] mx-auto space-y-24">
         {/* Trending Artworks */}
         <section>
           <SectionHeading>Trending Artworks</SectionHeading>

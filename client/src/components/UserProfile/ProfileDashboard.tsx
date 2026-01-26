@@ -12,58 +12,107 @@ const ProfileDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
 
-  const fullAddress = publicKey ? publicKey.toString() : "Not Connected";
+  const fullAddress = publicKey
+    ? `${publicKey.toString().slice(0, 6)}...${publicKey
+        .toString()
+        .slice(-6)}`
+    : "Wallet Not Connected";
 
-  const handleEdit = () => {
-    navigate("/settings/profile");
-  };
+  const handleEdit = () => navigate("/settings/profile");
 
   const handleCopy = () => {
-    if (publicKey) {
-      navigator.clipboard.writeText(publicKey.toString());
-      setCopied(true);
-
-      setTimeout(() => setCopied(false), 2000);
-    }
+    if (!publicKey) return;
+    navigator.clipboard.writeText(publicKey.toString());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div>
-      <img
-        src={sliderImage}
-        alt="Slider Image"
-        className="w-full py-5 object-cover h-100 opacity-40"
-      />
-      <img
-        src={avatarImage}
-        alt="Profile Picture"
-        className="absolute top-60 p-8"
-      />
-      <div className="absolute top-85 p-8 font-bold text-2xl flex gap-3 items-center">
-        <h2>{fullAddress}</h2>
+    <div className="min-h-screen bg-[#0F0F0F] text-white">
 
-        <button onClick={handleEdit} className="p-2 cursor-pointer">
-          <img src={edit} alt="Edit Icon" className="w-6 h-6 invert" />
-        </button>
-
-        <button onClick={handleCopy} className="cursor-pointer">
-          {copied && (
-            <span className="absolute -top-2 px-3 py-2 bg-black text-sm rounded">
-              Copied!
-            </span>
-          )}
-          <img src={copyIcon} alt="Copy Icon" className="w-6 h-6 invert" />
-        </button>
+      {/* Cover */}
+      <div className="relative h-[320px]">
+        <img
+          src={sliderImage}
+          alt="Cover"
+          className="w-full h-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] to-transparent" />
       </div>
-      <Sidebar>
-        <div className="flex flex-col justify-center items-center h-full text-center">
-          <h2 className="text-3xl font-bold">No results found</h2>
-          <p className="mt-5 text-gray-400">
-            We've been searching the blockchain
-          </p>
+
+      {/* Profile Header */}
+      <div className="relative max-w-7xl mx-auto px-6 -mt-24">
+        <div
+          className="bg-[#1C1C1C] border border-[#2A2A2A]
+                     rounded-3xl p-6 flex flex-col md:flex-row
+                     items-center gap-6 shadow-xl"
+        >
+          {/* Avatar */}
+          <img
+            src={avatarImage}
+            alt="Avatar"
+            className="w-32 h-32 rounded-2xl border border-[#2A2A2A]"
+          />
+
+          {/* Info */}
+          <div className="flex-1">
+            <h2
+              className="text-2xl font-bold
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent"
+            >
+              My Profile
+            </h2>
+
+            <div className="flex flex-wrap items-center gap-3 mt-2">
+              <span className="text-gray-400 text-sm">{fullAddress}</span>
+
+              <button
+                onClick={handleCopy}
+                className="relative p-2 rounded-lg bg-black/40
+                           hover:bg-black/70 transition"
+              >
+                {copied && (
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2
+                                   text-xs px-2 py-1 bg-black rounded">
+                    Copied!
+                  </span>
+                )}
+                <img src={copyIcon} alt="Copy" className="w-5 h-5 invert" />
+              </button>
+
+              <button
+                onClick={handleEdit}
+                className="p-2 rounded-lg bg-black/40
+                           hover:bg-black/70 transition"
+              >
+                <img src={edit} alt="Edit" className="w-5 h-5 invert" />
+              </button>
+            </div>
+          </div>
         </div>
-      </Sidebar>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        <Sidebar>
+          <div className="flex flex-col items-center justify-center
+                          h-full text-center py-20">
+            <h2
+              className="text-3xl font-bold
+                         bg-gradient-to-r from-purple-400 to-pink-500
+                         bg-clip-text text-transparent"
+            >
+              No Results Found
+            </h2>
+            <p className="mt-4 text-gray-400">
+              We’ve been searching the blockchain…
+            </p>
+          </div>
+        </Sidebar>
+      </div>
     </div>
   );
 };
+
 export default ProfileDashboard;

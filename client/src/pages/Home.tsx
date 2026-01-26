@@ -7,15 +7,15 @@ import {
   fetchRecentPurchases,
 } from "../services/listingService";
 
-import art1 from "../assets/understanding_nfts.jpg";
-import art2 from "../assets/digital_technology.webp";
-import art3 from "../assets/blockchain_technology.png";
-import art4 from "../assets/how_to_invest_in_nfts.jpg";
+import art1 from "../assets/Image_fx.png";
+import art2 from "../assets/Image_fx (1).png";
+import art3 from "../assets/Image_fx (2).png";
+import art4 from "../assets/Image_fx (3).png";
 
 // Skeletons
 const SkeletonCard = () => (
   <div className="animate-pulse space-y-4">
-    <div className="bg-black/80 border border-gray-700 rounded-xl aspect-square w-full" />
+    <div className="bg-black/70 border border-gray-700 rounded-xl aspect-square w-full" />
     <div className="space-y-2">
       <div className="h-5 bg-gray-700 rounded w-4/5" />
       <div className="h-4 bg-gray-700 rounded w-3/5" />
@@ -24,13 +24,20 @@ const SkeletonCard = () => (
 );
 
 const SkeletonTrending = () => (
-  <div className="animate-pulse bg-black/80 border border-gray-700 rounded-2xl p-6 space-y-4">
+  <div className="animate-pulse bg-black/70 border border-gray-700 rounded-2xl p-6 space-y-4">
     <div className="h-5 bg-gray-700 rounded w-24" />
     <div className="space-y-2">
       <div className="h-7 bg-gray-700 rounded w-3/4" />
       <div className="h-10 bg-gray-700 rounded w-1/2" />
     </div>
   </div>
+);
+
+// Animated gradient class (Tailwind + custom)
+const AnimatedTitle = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="text-3xl md:text-4xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 animate-gradient-x">
+    {children}
+  </h2>
 );
 
 const Home: React.FC = () => {
@@ -86,155 +93,186 @@ const Home: React.FC = () => {
     { id: 4, title: "Minting & Selling Your Artwork", image: art4 },
   ];
 
+  const renderImage = (src: string, alt: string, className?: string) => (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      onError={(e) => {
+        const target = e.currentTarget as HTMLImageElement;
+        target.onerror = null;
+        target.style.display = "none";
+        const parent = target.parentElement;
+        if (parent) {
+          const placeholder = document.createElement("div");
+          placeholder.className =
+            "flex items-center justify-center bg-gray-800 border border-gray-700 rounded-xl w-full h-full";
+          placeholder.innerHTML = `<p class="text-gray-400 text-center text-sm px-2">Image not available</p>`;
+          parent.appendChild(placeholder);
+        }
+      }}
+    />
+  );
+
   return (
     <div className="min-h-screen bg-[#0F0F0F] text-white">
-
       {/* Hero */}
-      <div className="px-5 pt-5 pb-5">
+      <div className="px-5 pt-5 pb-8">
         <ImageSlider />
       </div>
 
-      <div className="px-5 py-5 max-w-full mx-auto space-y-20">
-
+      <div className="px-5 py-5 max-w-[1400px] mx-auto space-y-24">
         {/* Trending Artworks */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-bold mb-5">
-            Trending Artworks
-          </h2>
+          <AnimatedTitle>Trending Artworks</AnimatedTitle>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {loading
-              ? Array(6).fill(0).map((_, i) => <SkeletonTrending key={i} />)
+              ? Array(6)
+                  .fill(0)
+                  .map((_, i) => <SkeletonTrending key={i} />)
               : trendingArtworks.map((art, index) => (
-                <div
-                  key={art.id}
-                  className="group bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden
-                    transition-all duration-300 hover:border-white/30 hover:-translate-y-1"
-                >
-                  <div className="px-3 py-2 text-xs text-gray-400">
-                    #{index + 1} Trending Artwork
-                  </div>
+                  <div
+                    key={art.id}
+                    className="group relative bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden
+                    shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                  >
+                    <div className="px-3 py-2 text-xs text-gray-400 z-10 relative">
+                      #{index + 1} Trending Artwork
+                    </div>
 
-                  <div className="p-4">
-                    <h3 className="font-semibold mb-2 group-hover:text-gray-300">
-                      {art.name}
-                    </h3>
+                    <div className="p-6">
+                      <h3 className="font-semibold mb-2 text-gray-200 group-hover:text-white transition">
+                        {art.name}
+                      </h3>
 
-                    <p className="text-xl font-semibold text-gray-300">
-                      {art.price}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Mint Price
-                    </p>
+                      <p className="text-xl font-bold text-white">{art.price}</p>
+                      <p className="text-xs text-gray-400 mt-1">Mint Price</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
           </div>
         </section>
 
         {/* Weekly Minted */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-bold mb-5">
-            Top Minted This Week
-          </h2>
+          <AnimatedTitle>Top Minted This Week</AnimatedTitle>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {loading
-              ? Array(4).fill(0).map((_, i) => <SkeletonCard key={i} />)
+              ? Array(4)
+                  .fill(0)
+                  .map((_, i) => <SkeletonCard key={i} />)
               : weeklyMints.map((art) => (
-                <div
-                  key={art.id}
-                  className="group bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden"
-                >
-                  <div className="aspect-square">
-                    <img
-                      src={art.imageUrl}
-                      alt={art.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition"
-                    />
-                  </div>
+                  <div
+                    key={art.id}
+                    className="group relative bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden
+                    shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  >
+                    <div className="aspect-square relative">
+                      {renderImage(
+                        art.imageUrl,
+                        art.name,
+                        "w-full h-full object-cover"
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
+                    </div>
 
-                  <div className="p-4">
-                    <h3 className="text-sm font-medium text-gray-300">
-                      {art.name}
-                    </h3>
-                    <p className="text-lg font-semibold text-gray-200 mt-1">
-                      {art.price}
-                    </p>
+                    <div className="p-4">
+                      <h3 className="text-sm font-medium text-gray-300 group-hover:text-white transition">
+                        {art.name}
+                      </h3>
+                      <p className="text-lg font-semibold text-white mt-1">
+                        {art.price}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
           </div>
         </section>
 
         {/* Recently Minted */}
         <section>
-          <h2 className="text-2xl md:text-3xl font-bold mb-5">
-            Recently Minted
-          </h2>
+          <AnimatedTitle>Recently Minted</AnimatedTitle>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {loading
-              ? Array(4).fill(0).map((_, i) => <SkeletonCard key={i} />)
+              ? Array(4)
+                  .fill(0)
+                  .map((_, i) => <SkeletonCard key={i} />)
               : recentMints.map((art: any, i: number) => (
-                <div
-                  key={i}
-                  className="bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden"
-                >
-                  <div className="aspect-square relative">
-                    <img
-                      src={art.imageUrl}
-                      alt={art.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <span className="absolute bottom-3 left-3 bg-white text-black text-xs px-2 py-1 rounded">
-                      MINTED
-                    </span>
-                  </div>
+                  <div
+                    key={i}
+                    className="group relative bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  >
+                    <div className="aspect-square relative">
+                      {renderImage(
+                        art.imageUrl,
+                        art.name,
+                        "w-full h-full object-cover"
+                      )}
+                      <span className="absolute bottom-3 left-3 bg-gradient-to-r from-pink-500 to-purple-500 text-black text-xs font-bold px-2 py-1 rounded">
+                        MINTED
+                      </span>
+                    </div>
 
-                  <div className="p-4">
-                    <p className="text-sm text-gray-300">{art.name}</p>
-                    <p className="text-lg font-semibold text-gray-200">
-                      {art.price} SOL
-                    </p>
+                    <div className="p-4">
+                      <p className="text-sm text-gray-300 group-hover:text-white transition">
+                        {art.name}
+                      </p>
+                      <p className="text-lg font-bold text-white mt-1">
+                        {art.price} SOL
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
           </div>
         </section>
 
         {/* Learn */}
         <section>
-          <h2 className="text-xl md:text-2xl font-bold mb-5">
-            Learn About Digital Art & Minting
-          </h2>
+          <AnimatedTitle>Learn About Digital Art & Minting</AnimatedTitle>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {articles.map((article) => (
               <div
                 key={article.id}
-                onClick={() => article.id === 1 && navigate("/hownftsworks")}
-                className="cursor-pointer bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden"
+                onClick={() =>
+                  article.id === 1 && navigate("/hownftsworks")
+                }
+                className="group cursor-pointer relative bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="aspect-video object-cover w-full"
-                />
+                {renderImage(
+                  article.image,
+                  article.title,
+                  "aspect-video object-cover w-full"
+                )}
                 <div className="p-4">
-                  <h3 className="text-sm font-semibold">
+                  <h3 className="text-sm font-semibold text-gray-300 group-hover:text-white transition">
                     {article.title}
                   </h3>
-                  <p className="text-xs text-gray-400 mt-2">
-                    Read article →
-                  </p>
+                  <p className="text-xs text-gray-400 mt-2">Read article →</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
-
       </div>
+
+      {/* Tailwind CSS gradient animation */}
+      <style>
+        {`
+          @keyframes gradient-x {
+            0% { background-position: 0% }
+            50% { background-position: 100% }
+            100% { background-position: 0% }
+          }
+          .animate-gradient-x {
+            background-size: 200% 200%;
+            animation: gradient-x 3s ease infinite;
+          }
+        `}
+      </style>
     </div>
   );
 };

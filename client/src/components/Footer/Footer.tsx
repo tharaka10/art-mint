@@ -28,9 +28,9 @@ const Footer = () => {
           <a href="/about" className="hover:scale-105 transition-transform text-center">
             About
           </a>
-          <a href="/marketplace" className="hover:scale-105 transition-transform text-center">
+          {/* <a href="/marketplace" className="hover:scale-105 transition-transform text-center">
             Marketplace
-          </a>
+          </a> */}
           <a href="/mint" className="hover:scale-105 transition-transform text-center">
             Mint NFT
           </a>
@@ -52,7 +52,7 @@ const Footer = () => {
           Contact us:{" "}
           <a
             href="mailto:support@artmint.io"
-            className="text-blue-500 hover:underline"
+            className="text-purple-400 hover:underline"
           >
             support@artmint.io
           </a>

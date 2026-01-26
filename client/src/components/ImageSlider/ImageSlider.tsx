@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import image1 from "../../assets/sliderHome/7950375.jpg";
-import image2 from "../../assets/sliderHome/campbell-3ZUsNJhi_Ik-unsplash.jpg";
-import image3 from "../../assets/sliderHome/gabriel-gurrola-u6BPMXgURuI-unsplash.jpg";
-import image4 from "../../assets/sliderHome/kevin-bhagat-3cLpiv8h5so-unsplash.jpg";
+import image1 from "../../assets/sliderHome/dan-farrell-fT49QnFucQ8-unsplash.jpg";
+import image2 from "../../assets/sliderHome/evie-s-kqJfP-lrl-8-unsplash.jpg";
+import image3 from "../../assets/sliderHome/jene-stephaniuk--MCrF6hnojU-unsplash.jpg";
+import image4 from "../../assets/sliderHome/muriel-liu-Hb1CiSzPVfk-unsplash.jpg";
 
 const STATIC_SLIDES = [
   {
@@ -60,7 +60,7 @@ const ImageSlider: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-[80vh] max-h-[500px] min-h-[400px] overflow-hidden bg-black select-none rounded-2xl shadow-xl">
+    <div className="relative w-full h-[70vh] max-h-[450px] min-h-[350px] overflow-hidden bg-black select-none rounded-2xl shadow-2xl">
       {/* Slides */}
       {STATIC_SLIDES.map((slide, i) => {
         const offset = i - activeIndex;
@@ -72,7 +72,7 @@ const ImageSlider: React.FC = () => {
             className="absolute inset-0"
             style={{
               transform: `translateX(${offset * 100}%)`,
-              transition: "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
+              transition: "transform 1s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
             {/* Background */}
@@ -80,32 +80,34 @@ const ImageSlider: React.FC = () => {
               <img
                 src={slide.src}
                 alt={slide.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover brightness-90"
                 draggable={false}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
             </div>
 
             {/* Content */}
-            <div className="absolute bottom-0 left-0 p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 text-white max-w-5xl">
+            <div className="absolute bottom-0 left-0 p-6 sm:p-8 md:p-10 text-white max-w-3xl">
               <h2
-                className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none mb-3 sm:mb-4
-                            bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent transition-all duration-1000`}
+                className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight py-2
+                  bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent
+                  drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] transition-all duration-1000`}
                 style={{
                   opacity: isActive ? 1 : 0,
-                  transform: isActive ? "translateY(0)" : "translateY(40px)",
-                  transitionDelay: isActive ? "0.3s" : "0s",
+                  transform: isActive ? "translateY(0)" : "translateY(20px)",
+                  transitionDelay: isActive ? "0.2s" : "0s",
                 }}
               >
                 {slide.title}
               </h2>
 
               <p
-                className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/60 font-light mb-6 sm:mb-8 max-w-3xl transition-all duration-1000"
+                className="text-sm sm:text-base md:text-lg lg:text-xl text-white/70 font-light leading-relaxed
+                  drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] transition-all duration-1000"
                 style={{
                   opacity: isActive ? 1 : 0,
-                  transform: isActive ? "translateY(0)" : "translateY(30px)",
-                  transitionDelay: isActive ? "0.5s" : "0s",
+                  transform: isActive ? "translateY(0)" : "translateY(15px)",
+                  transitionDelay: isActive ? "0.4s" : "0s",
                 }}
               >
                 {slide.subtitle}
@@ -116,7 +118,7 @@ const ImageSlider: React.FC = () => {
       })}
 
       {/* Dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 sm:gap-5">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 sm:gap-4">
         {STATIC_SLIDES.map((_, i) => (
           <button
             key={i}
@@ -127,7 +129,7 @@ const ImageSlider: React.FC = () => {
             <div
               className={`w-3 h-3 rounded-full transition-all duration-500 ${
                 i === activeIndex
-                  ? "bg-gradient-to-r from-purple-400 to-pink-500 scale-150 shadow-lg shadow-pink-500/60"
+                  ? "bg-gradient-to-r from-purple-400 to-pink-500 scale-125 shadow-lg shadow-pink-500/50"
                   : "bg-white/40 group-hover:bg-white/70"
               }`}
             />

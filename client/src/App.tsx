@@ -14,7 +14,6 @@ import Profile from "./pages/Profile";
 import ProfileGoods from "./pages/ProfileGoods";
 import NFTOwnershipCheck from "./pages/NFTOwnershipCheck";
 import CreateAuctionHouse from "./pages/CreateAuctionHouse";
-import MyNFTsPage from "./pages/MyNFTsPage";
 
 
 function App() {
@@ -143,13 +142,7 @@ function App() {
           }
         />
        
-          <Route
-          path="/mynfts"
-          element={
-            <Layout>
-              <MyNFTsPage/>
-            </Layout>
-          } />
+          
         <Route
           path="/checking"
           element={

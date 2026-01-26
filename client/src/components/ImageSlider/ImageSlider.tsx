@@ -102,7 +102,7 @@ const ImageSlider: React.FC = () => {
               </h2>
 
               <p
-                className="text-sm sm:text-base md:text-lg lg:text-xl text-white/70 font-light leading-relaxed
+                className="text-sm sm:text-base md:text-sm lg:text-sm text-white/70 font-light leading-relaxed
                   drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] transition-all duration-1000"
                 style={{
                   opacity: isActive ? 1 : 0,

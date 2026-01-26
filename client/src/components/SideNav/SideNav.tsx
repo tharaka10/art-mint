@@ -1,36 +1,14 @@
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import {
-//   IoHomeSharp,
-//   // IoNotificationsSharp,
-//   IoSettingsSharp,
-//   IoPersonSharp,
-//   IoChevronDown,
-//   IoChevronForward,
-// } from "react-icons/io5";
-// import { MdAdminPanelSettings, MdOutlineInventory2 } from "react-icons/md";
-// import { GiBoxUnpacking, GiPriceTag, GiCargoShip } from "react-icons/gi";
-// import { RiCoinsLine } from "react-icons/ri";
-// import {
-//   HiOutlineDocumentText,
-//   HiOutlineInformationCircle,
-// } from "react-icons/hi";
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   IoHomeSharp,
-  // IoNotificationsSharp,,
   IoPersonSharp,
   IoChevronDown,
   IoChevronForward,
 } from "react-icons/io5";
-import { GiBoxUnpacking, GiPriceTag} from "react-icons/gi";
+import { GiBoxUnpacking, GiPriceTag } from "react-icons/gi";
 import { RiCoinsLine } from "react-icons/ri";
-import {
-  HiOutlineDocumentText,
-  HiOutlineInformationCircle,
-} from "react-icons/hi";
+import { HiOutlineDocumentText, HiOutlineInformationCircle } from "react-icons/hi";
 
 /* ================================
    Side Navigation
@@ -46,27 +24,31 @@ const SideNav: React.FC = () => {
     <aside
       className="
         fixed top-0 left-0 z-50 h-screen w-48
-        bg-black border-r border-gray-800
         flex flex-col overflow-y-auto
         scrollbar scrollbar-w-2
         scrollbar-track-gray-900/50
         scrollbar-thumb-gray-600
         hover:scrollbar-thumb-gray-500
         transition-all duration-300
+        bg-gradient-to-b from-black to-purple-900
       "
       style={{ scrollbarColor: "#6b7280 #111827" }}
     >
       {/* Logo */}
       <div className="p-5 text-center">
-        <h2 className="text-2xl font-bold
-                       bg-gradient-to-r from-purple-400 to-pink-500
-                       bg-clip-text text-transparent">
+        <h2
+          className="
+            text-2xl font-bold
+            bg-gradient-to-r from-purple-400 to-pink-500
+            bg-clip-text text-transparent
+          "
+        >
           Art Mint
         </h2>
       </div>
 
       {/* Menu Label */}
-      <p className="px-5 mb-2 text-xs font-bold tracking-widest text-gray-500 uppercase">
+      <p className="px-5 mb-2 text-xs font-bold tracking-widest text-gray-400 uppercase">
         Menu
       </p>
 
@@ -74,67 +56,9 @@ const SideNav: React.FC = () => {
         <MenuItem icon={<IoHomeSharp />} label="Home" path="/home" />
         <MenuItem icon={<GiPriceTag />} label="Mint NFTs" path="/mint" />
         <MenuItem icon={<GiBoxUnpacking />} label="Minted NFTs" path="/goods" />
-        
-
-        {/* <MenuItem
-          icon={<MdOutlineInventory2 />}
-          label="Listed NFTs"
-          path="/listednfts"
-        /> */}
-
-        {/* <Dropdown
-          title="My NFTs"
-          icon={<RiCoinsLine />}
-          isOpen={openDropdown === "mynfts"}
-          onClick={() => toggleDropdown("mynfts")}
-          items={[
-            { label: "My NFTs", path: "/mynfts" },
-            { label: "Bought NFTs", path: "/boughtnfts" },
-          ]}
-        /> */}
-
         <MenuItem icon={<RiCoinsLine />} label="My NFTs" path="/mynfts" />
-
-        {/* <Dropdown
-          title="Sales"
-          icon={<GiPriceTag />}
-          isOpen={openDropdown === "sales"}
-          onClick={() => toggleDropdown("sales")}
-          items={[
-            { label: "Sales Page", path: "/sales" },
-            { label: "Auction House", path: "/auctionhouse" },
-          ]}
-        /> */}
-
-        {/* <MenuItem
-          icon={<IoNotificationsSharp />}
-          label="Notifications"
-          path="/notifications"
-        /> */}
-
-        {/* <Dropdown
-          title="Delivery"
-          icon={<GiCargoShip />}
-          isOpen={openDropdown === "delivery"}
-          onClick={() => toggleDropdown("delivery")}
-          items={[
-            { label: "Tracking View", path: "/trackingview" },
-            { label: "Shipping", path: "/shipping" },
-            { label: "Delivery Status", path: "/delivery-status" },
-          ]}
-        /> */}
-
-        <MenuItem
-          icon={<HiOutlineDocumentText />}
-          label="How NFTs Work"
-          path="/hownftsworks"
-        />
-
-        <MenuItem
-          icon={<HiOutlineInformationCircle />}
-          label="About"
-          path="/about"
-        />
+        <MenuItem icon={<HiOutlineDocumentText />} label="How NFTs Work" path="/hownftsworks" />
+        <MenuItem icon={<HiOutlineInformationCircle />} label="About" path="/about" />
 
         <Dropdown
           title="Profile"
@@ -146,26 +70,6 @@ const SideNav: React.FC = () => {
             { label: "My Goods", path: "/mygoods" },
           ]}
         />
-
-        {/* <Dropdown
-          title="Settings"
-          icon={<IoSettingsSharp />}
-          isOpen={openDropdown === "settings"}
-          onClick={() => toggleDropdown("settings")}
-          items={[
-            { label: "Profile Settings", path: "/settings/profile" },
-            {
-              label: "Notification Settings",
-              path: "/settings/notificationSettings",
-            },
-          ]}
-        /> */}
-
-        {/* <MenuItem
-          icon={<MdAdminPanelSettings />}
-          label="Admin Login"
-          path="/admin/login"
-        /> */}
       </ul>
     </aside>
   );
@@ -187,7 +91,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, label, path }) => (
       className="
         group flex items-center p-2.5 rounded-lg
         text-gray-300 hover:text-white
-        hover:bg-gray-800/80
+        hover:bg-gray-800/60
         transition-all duration-200
       "
     >
@@ -210,13 +114,7 @@ interface DropdownProps {
   onClick: () => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
-  title,
-  icon,
-  items,
-  isOpen,
-  onClick,
-}) => (
+const Dropdown: React.FC<DropdownProps> = ({ title, icon, items, isOpen, onClick }) => (
   <li>
     <button
       type="button"
@@ -224,7 +122,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       className="
         group flex w-full items-center justify-between p-2.5 rounded-lg
         text-gray-300 hover:text-white
-        hover:bg-gray-800/80
+        hover:bg-gray-800/60
         transition-all duration-200
       "
     >
@@ -250,7 +148,7 @@ const Dropdown: React.FC<DropdownProps> = ({
               to={path}
               className="
                 block px-2 py-1.5 rounded-md text-xs text-gray-400
-                hover:text-white hover:bg-gray-800/60
+                hover:text-white hover:bg-gray-800/50
                 transition-all duration-200
               "
             >

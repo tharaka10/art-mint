@@ -79,7 +79,7 @@ const ProfileGoods: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#0F0F0F] text-white px-5 py-10 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#000000] text-white px-5 py-10 max-w-7xl mx-auto">
 
      
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-10

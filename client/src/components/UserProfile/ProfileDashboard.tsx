@@ -1,118 +1,185 @@
-import React, { useState } from "react";
-import sliderImage from "../../assets/Slider1.jpg";
-import avatarImage from "../../assets/Avatar.svg";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
-import edit from "../../assets/Edit.svg";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
+import { LifeLine } from "react-loading-indicators";
+
+import avatarImage from "../../assets/Avatar.svg";
 import copyIcon from "../../assets/CopyIcon.svg";
-import { useNavigate } from "react-router-dom";
-import Sidebar from "./UserProfile";
+import { app } from "../../utils/firebase";
 
-const ProfileDashboard: React.FC = () => {
-  const { publicKey } = useWallet();
-  const navigate = useNavigate();
+type NFTData = {
+  mintAddress: string;
+  name: string;
+  description?: string;
+  image?: string;
+};
+
+const ProfilePage: React.FC = () => {
+  const wallet = useWallet();
+  const location = useLocation();
+
+  const publicKeyStr = useMemo(
+    () => wallet.publicKey?.toBase58() ?? null,
+    [wallet.publicKey]
+  );
+
+  const shortAddress = publicKeyStr
+    ? `${publicKeyStr.slice(0, 6)}...${publicKeyStr.slice(-6)}`
+    : "Wallet not connected";
+
   const [copied, setCopied] = useState(false);
-
-  const fullAddress = publicKey
-    ? `${publicKey.toString().slice(0, 6)}...${publicKey
-        .toString()
-        .slice(-6)}`
-    : "Wallet Not Connected";
-
-  const handleEdit = () => navigate("/settings/profile");
+  const [nfts, setNfts] = useState<NFTData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleCopy = () => {
-    if (!publicKey) return;
-    navigator.clipboard.writeText(publicKey.toString());
+    if (!publicKeyStr) return;
+    navigator.clipboard.writeText(publicKeyStr);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1500);
   };
 
+  useEffect(() => {
+    if (!publicKeyStr) {
+      setNfts([]);
+      setLoading(false);
+      return;
+    }
+
+    const db = getFirestore(app);
+    const q = query(
+      collection(db, "nfts"),
+      where("owner", "==", publicKeyStr)
+    );
+
+    const unsub = onSnapshot(q, (snap) => {
+      setNfts(snap.docs.map((d) => d.data() as NFTData));
+      setLoading(false);
+    });
+
+    return () => unsub();
+  }, [publicKeyStr]);
+
   return (
-    <div className="min-h-screen bg-[#0F0F0F] text-white">
+    <div className="min-h-screen bg-[#08080C] text-gray-200">
+      {/* ===== HERO ===== */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-black to-pink-900/30" />
+        <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-16">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 blur-xl opacity-40" />
+              <img
+                src={avatarImage}
+                alt="Avatar"
+                className="relative w-28 h-28 rounded-4xl bg-black border border-white/10"
+              />
+            </div>
 
-      {/* Cover */}
-      <div className="relative h-[320px]">
-        <img
-          src={sliderImage}
-          alt="Cover"
-          className="w-full h-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] to-transparent" />
-      </div>
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-3xl font-semibold text-purple-900">
+                My Profile
+              </h1>
 
-      {/* Profile Header */}
-      <div className="relative max-w-7xl mx-auto px-6 -mt-24">
-        <div
-          className="bg-[#1C1C1C] border border-[#2A2A2A]
-                     rounded-3xl p-6 flex flex-col md:flex-row
-                     items-center gap-6 shadow-xl"
-        >
-          {/* Avatar */}
-          <img
-            src={avatarImage}
-            alt="Avatar"
-            className="w-32 h-32 rounded-2xl border border-[#2A2A2A]"
-          />
+              <div className="mt-2 flex items-center justify-center md:justify-start gap-3">
+                <span className="text-sm text-gray-400">{shortAddress}</span>
 
-          {/* Info */}
-          <div className="flex-1">
-            <h2
-              className="text-2xl font-bold
-                         bg-gradient-to-r from-purple-400 to-pink-500
-                         bg-clip-text text-transparent"
-            >
-              My Profile
-            </h2>
-
-            <div className="flex flex-wrap items-center gap-3 mt-2">
-              <span className="text-gray-400 text-sm">{fullAddress}</span>
-
-              <button
-                onClick={handleCopy}
-                className="relative p-2 rounded-lg bg-black/40
-                           hover:bg-black/70 transition"
-              >
-                {copied && (
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2
-                                   text-xs px-2 py-1 bg-black rounded">
-                    Copied!
-                  </span>
+                {publicKeyStr && (
+                  <button
+                    onClick={handleCopy}
+                    className="relative p-1.5 rounded-md
+                               border border-white/10
+                               hover:bg-white/5 transition"
+                  >
+                    {copied && (
+                      <span className="absolute -top-7 left-1/2 -translate-x-1/2
+                                       text-xs px-2 py-1 rounded bg-black
+                                       border border-white/10">
+                        Copied
+                      </span>
+                    )}
+                    <img src={copyIcon} className="w-4 h-4 invert" />
+                  </button>
                 )}
-                <img src={copyIcon} alt="Copy" className="w-5 h-5 invert" />
-              </button>
+              </div>
 
-              <button
-                onClick={handleEdit}
-                className="p-2 rounded-lg bg-black/40
-                           hover:bg-black/70 transition"
-              >
-                <img src={edit} alt="Edit" className="w-5 h-5 invert" />
-              </button>
+              <p className="mt-4 max-w-xl text-gray-400 text-sm">
+                Explore and manage the NFTs minted under this wallet.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <Sidebar>
-          <div className="flex flex-col items-center justify-center
-                          h-full text-center py-20">
-            <h2
-              className="text-3xl font-bold
-                         bg-gradient-to-r from-purple-400 to-pink-500
-                         bg-clip-text text-transparent"
-            >
-              No Results Found
-            </h2>
-            <p className="mt-4 text-gray-400">
-              We’ve been searching the blockchain…
-            </p>
+      {/* ===== CONTENT ===== */}
+      <div className="max-w-6xl mx-auto px-6 py-14">
+        <h2 className="text-xl font-medium text-white mb-8">
+          Minted NFTs
+        </h2>
+
+        {!publicKeyStr ? (
+          <p className="text-gray-500 text-center">
+            Connect your wallet to view assets.
+          </p>
+        ) : loading ? (
+          <div className="flex justify-center py-20">
+            <LifeLine color="#a855f7" size="medium" />
           </div>
-        </Sidebar>
+        ) : nfts.length === 0 ? (
+          <p className="text-gray-500 text-center">
+            No NFTs found for this wallet.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {nfts.map((nft) => (
+              <Link
+                key={nft.mintAddress}
+                to={`/nft/${nft.mintAddress}`}
+                state={{ from: location.pathname }}
+                className="group rounded-2xl bg-[#111118]
+                           border border-white/10 overflow-hidden
+                           hover:border-purple-500/40
+                           hover:-translate-y-1 transition"
+              >
+                {nft.image ? (
+                  <img
+                    src={nft.image}
+                    alt={nft.name}
+                    className="h-56 w-full object-cover"
+                  />
+                ) : (
+                  <div className="h-56 flex items-center justify-center text-gray-500 bg-black/40">
+                    No image
+                  </div>
+                )}
+
+                <div className="p-5">
+                  <h3 className="text-white font-medium">
+                    {nft.name}
+                  </h3>
+
+                  <p className="text-sm text-gray-400 mt-1 line-clamp-2">
+                    {nft.description || "No description available."}
+                  </p>
+
+                  <span className="inline-block mt-4 text-sm
+                                   text-purple-400 group-hover:text-pink-400">
+                    View NFT →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default ProfileDashboard;
+export default ProfilePage;

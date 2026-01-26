@@ -33,11 +33,11 @@ const SkeletonTrending = () => (
   </div>
 );
 
-// Animated gradient class (Tailwind + custom)
-const AnimatedTitle = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-3xl md:text-4xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 animate-gradient-x">
+// Professional gradient section heading - smaller and subtle
+const SectionHeading = ({ children }: { children: React.ReactNode }) => (
+  <h3 className="text-2xl md:text-2.5xl font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
     {children}
-  </h2>
+  </h3>
 );
 
 const Home: React.FC = () => {
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
       <div className="px-5 py-5 max-w-[1400px] mx-auto space-y-24">
         {/* Trending Artworks */}
         <section>
-          <AnimatedTitle>Trending Artworks</AnimatedTitle>
+          <SectionHeading>Trending Artworks</SectionHeading>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {loading
@@ -156,7 +156,7 @@ const Home: React.FC = () => {
 
         {/* Weekly Minted */}
         <section>
-          <AnimatedTitle>Top Minted This Week</AnimatedTitle>
+          <SectionHeading>Top Minted This Week</SectionHeading>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {loading
@@ -193,7 +193,7 @@ const Home: React.FC = () => {
 
         {/* Recently Minted */}
         <section>
-          <AnimatedTitle>Recently Minted</AnimatedTitle>
+          <SectionHeading>Recently Minted</SectionHeading>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {loading
@@ -231,7 +231,7 @@ const Home: React.FC = () => {
 
         {/* Learn */}
         <section>
-          <AnimatedTitle>Learn About Digital Art & Minting</AnimatedTitle>
+          <h2 className="text-md md:text-md mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Learn About Digital Art & Minting</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {articles.map((article) => (
@@ -258,21 +258,6 @@ const Home: React.FC = () => {
           </div>
         </section>
       </div>
-
-      {/* Tailwind CSS gradient animation */}
-      <style>
-        {`
-          @keyframes gradient-x {
-            0% { background-position: 0% }
-            50% { background-position: 100% }
-            100% { background-position: 0% }
-          }
-          .animate-gradient-x {
-            background-size: 200% 200%;
-            animation: gradient-x 3s ease infinite;
-          }
-        `}
-      </style>
     </div>
   );
 };

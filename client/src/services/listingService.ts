@@ -219,6 +219,7 @@ import {
   orderBy,
   query,
   limit as fbLimit,
+  where,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { Connection, PublicKey } from "@solana/web3.js";
@@ -305,6 +306,38 @@ export const fetchAllListings = async (): Promise<Listing[]> => {
       })
     );
 
+    console.debug("listingService.fetchAllListings -> firestore docs:", snap.docs.length, "parsed listings:", listings.length);
+
+    // If there are no listings in the `listings` collection, fall back to `nfts` collection
+    if (!listings.length) {
+      try {
+        // Fetch latest NFTs ordered by createdAt (newest first)
+        const q = query(collection(db, "nfts"), orderBy("createdAt", "desc"));
+        const nftSnap = await getDocs(q);
+        const fallback = nftSnap.docs.map((d) => {
+          const data: any = d.data();
+          return {
+            id: d.id,
+            description: data.description || "",
+            nftMint: data.mintAddress || "",
+            price: data.price || 0,
+            currency: data.currency || "SOL",
+            seller: data.owner || "",
+            status: "active",
+            imageUrl: safeImageUrl(data.image),
+            name: data.name || "Unnamed NFT",
+            // include createdAt for potential further sorting
+            createdAt: data.createdAt,
+          } as any;
+        });
+
+        console.debug("listingService.fetchAllListings -> fallback to nfts (ordered by createdAt), docs:", nftSnap.docs.length, "mapped:", fallback.length);
+        return fallback as Listing[];
+      } catch (err) {
+        console.error("listingService.fetchAllListings fallback error:", err);
+      }
+    }
+
     return listings;
   } catch (error) {
     console.error("🔥 Failed to fetch listings:", error);
@@ -337,7 +370,7 @@ export const fetchRecentPurchases = async (limitCount: number) => {
 
     const snap = await getDocs(q);
 
-    return snap.docs.map((d) => {
+    const mapped = snap.docs.map((d) => {
       const data = d.data();
       return {
         id: d.id,
@@ -352,6 +385,36 @@ export const fetchRecentPurchases = async (limitCount: number) => {
         tx: data.tx,
       };
     });
+
+    console.debug("listingService.fetchRecentPurchases -> docs:", snap.docs.length, "mapped:", mapped.length);
+
+    if (mapped.length) return mapped;
+
+    // Fallback to `nfts` collection when there are no purchases
+    try {
+      const nftSnap = await getDocs(query(collection(db, "nfts"), orderBy("createdAt", "desc"), fbLimit(limitCount)));
+      const nfts = nftSnap.docs.map((d) => {
+        const data: any = d.data();
+        return {
+          id: d.id,
+          buyer: null,
+          seller: data.owner || null,
+          name: data.name,
+          imageUrl: safeImageUrl(data.image),
+          price: data.price || 0,
+          currency: "SOL",
+          createdAt: data.createdAt,
+          mint: data.mintAddress,
+          tx: null,
+        };
+      });
+
+      console.debug("listingService.fetchRecentPurchases -> fallback nfts:", nfts.length);
+      return nfts;
+    } catch (err) {
+      console.error("fetchRecentPurchases fallback error:", err);
+      return [];
+    }
   } catch (err) {
     console.error("🔥 fetchRecentPurchases error:", err);
     return [];
@@ -401,33 +464,67 @@ export const fetchWeeklySales = async (needed: number = 4) => {
 
   let startTime = Math.floor(monday.getTime() / 1000);
 
+  // First, collect purchases for the current week and sort oldest-first
   let results: any[] = [];
 
-  // Check up to 4 previous weeks until enough results
-  for (let i = 0; i < 4; i++) {
-    const weekPurchases = await fetchPurchasesSince(startTime);
-
-    results = [...results, ...weekPurchases];
-
-    if (results.length >= needed) break;
-
-    // Move to previous week
-    startTime -= 7 * 24 * 60 * 60;
-  }
-
-  // -----------------------------------------------------
-  // 🔥 NEW SORT LOGIC
-  // Highest price first
-  // If same price → latest sale first (newest createdAt first)
-  // -----------------------------------------------------
-  const sorted = results.sort((a: any, b: any) => {
-    if (b.price !== a.price) {
-      return b.price - a.price; // highest price first
-    }
-    // same price → newest sale first
-    return b.createdAt.seconds - a.createdAt.seconds;
+  const currentWeekPurchases = await fetchPurchasesSince(startTime);
+  currentWeekPurchases.sort((a: any, b: any) => {
+    const aSec = a.createdAt?.seconds || 0;
+    const bSec = b.createdAt?.seconds || 0;
+    return aSec - bSec; // oldest first
   });
 
-  return sorted.slice(0, needed);
+  results = [...currentWeekPurchases];
+
+  // If not enough, fill from previous weeks (oldest-first per week)
+  let prevStart = startTime - 7 * 24 * 60 * 60;
+  for (let i = 0; i < 3 && results.length < needed; i++) {
+    const weekPurchases = await fetchPurchasesSince(prevStart);
+    weekPurchases.sort((a: any, b: any) => {
+      const aSec = a.createdAt?.seconds || 0;
+      const bSec = b.createdAt?.seconds || 0;
+      return aSec - bSec;
+    });
+
+    results = [...results, ...weekPurchases];
+    prevStart -= 7 * 24 * 60 * 60;
+  }
+
+  // Return oldest-first overall (so first minted this week appears first)
+  if (results.length >= needed) {
+    console.debug("listingService.fetchWeeklySales -> purchases results:", results.length);
+    return results.slice(0, needed);
+  }
+
+  // If no purchases found for the week, fall back to `nfts` created this week (oldest-first)
+  try {
+    const weekStartDate = new Date(monday.getTime());
+    const nftQ = query(
+      collection(db, "nfts"),
+      where("createdAt", ">=", weekStartDate),
+      orderBy("createdAt", "asc"),
+      fbLimit(needed)
+    );
+
+    const nftSnap = await getDocs(nftQ);
+    const fallback = nftSnap.docs.map((d) => {
+      const data: any = d.data();
+      return {
+        id: d.id,
+        name: data.name,
+        price: data.price || 0,
+        currency: data.currency || "SOL",
+        imageUrl: safeImageUrl(data.image),
+        createdAt: data.createdAt,
+        mint: data.mintAddress,
+      };
+    });
+
+    console.debug("listingService.fetchWeeklySales -> fallback nfts this week:", nftSnap.docs.length, "mapped:", fallback.length);
+    return fallback.slice(0, needed);
+  } catch (err) {
+    console.error("listingService.fetchWeeklySales fallback error:", err);
+    return results.slice(0, needed);
+  }
 };
 

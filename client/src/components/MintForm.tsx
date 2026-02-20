@@ -148,32 +148,36 @@ const MintForm: React.FC = () => {
       <div className="w-full max-w-lg space-y-4 bg-gray-900 p-6 rounded-2xl shadow-lg">
 
         {/* Form Fields */}
-        <label className="font-semibold text-gray-300">Name</label>
+        <label htmlFor="nft-name" className="font-semibold text-gray-300">Name</label>
         <input
+          id="nft-name"
           placeholder="NFT name"
           className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
 
-        <label className="font-semibold text-gray-300">Symbol</label>
+        <label htmlFor="nft-symbol" className="font-semibold text-gray-300">Symbol</label>
         <input
+          id="nft-symbol"
           placeholder="NFT symbol"
           className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
           value={form.symbol}
           onChange={(e) => setForm({ ...form, symbol: e.target.value })}
         />
 
-        <label className="font-semibold text-gray-300">Description</label>
+        <label htmlFor="nft-description" className="font-semibold text-gray-300">Description</label>
         <input
+          id="nft-description"
           placeholder="NFT description"
           className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
 
-        <label className="font-semibold text-gray-300">Email</label>
+        <label htmlFor="nft-email" className="font-semibold text-gray-300">Email</label>
         <input
+          id="nft-email"
           type="email"
           placeholder="Owner's email"
           className="w-full p-3 bg-gray-800 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
@@ -181,10 +185,12 @@ const MintForm: React.FC = () => {
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
 
-        <label className="font-semibold text-gray-300">NFT Image</label>
+        <label htmlFor="nft-image" className="font-semibold text-gray-300">NFT Image</label>
         <input
+          id="nft-image"
           type="file"
           accept="image/*"
+          title="Upload NFT image"
           className="w-full text-sm bg-gray-800 rounded-lg border border-gray-700 p-2"
           onChange={(e) => setImageFile(e.target.files?.[0] || null)}
         />

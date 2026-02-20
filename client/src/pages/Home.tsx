@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ImageSlider from "../components/ImageSlider/ImageSlider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   fetchLimitedListings,
   fetchWeeklySales,
@@ -58,24 +58,35 @@ const Home: React.FC = () => {
           fetchRecentPurchases(4),
         ]);
 
+        console.debug("Home.loadAll -> fetched:", { trendingCount: trending?.length, weeklyCount: weekly?.length, recentCount: recent?.length });
+
         setTrendingArtworks(
           trending.map((item: any, i: number) => ({
             id: i + 1,
-            name: item.name || "Untitled Artwork",
-            price: `${item.price} ${item.currency || "USD"}`,
+            mint: item.nftMint || item.mint || item.mintAddress || "",
+            name: item.name || item.nftName || "Untitled Artwork",
+            price: `${item.price ?? 0} ${item.currency || "SOL"}`,
+            imageUrl: item.imageUrl || item.image || "/placeholder.jpg",
           }))
         );
 
         setWeeklyMints(
           weekly.map((item: any, i: number) => ({
             id: i + 1,
-            name: item.name || "Unknown Artwork",
-            price: `${item.price} ${item.currency || "USD"}`,
-            imageUrl: item.imageUrl || "/placeholder.jpg",
+            mint: item.nftMint || item.mint || item.mintAddress || "",
+            name: item.name || item.nftName || "Unknown Artwork",
+            imageUrl: item.imageUrl || item.image || "/placeholder.jpg",
           }))
         );
 
-        setRecentMints(recent);
+        setRecentMints(
+          (recent || []).map((item: any, i: number) => ({
+            id: i + 1,
+            mint: item.mint || item.nftMint || item.mintAddress || "",
+            name: item.name || item.nftName || "",
+            imageUrl: item.imageUrl || item.image || "/placeholder.jpg",
+          }))
+        );
       } catch (err) {
         console.error("Failed to load art data", err);
       } finally {
@@ -131,7 +142,7 @@ const Home: React.FC = () => {
               ? Array(6)
                   .fill(0)
                   .map((_, i) => <SkeletonTrending key={i} />)
-              : trendingArtworks.map((art, index) => (
+                : trendingArtworks.map((art, index) => (
                   <div
                     key={art.id}
                     className="group relative bg-[#1C1C1C] border border-[#2A2A2A] rounded-xl overflow-hidden
@@ -146,8 +157,16 @@ const Home: React.FC = () => {
                         {art.name}
                       </h3>
 
-                      <p className="text-xl font-bold text-white">{art.price}</p>
-                      <p className="text-xs text-gray-400 mt-1">Mint Price</p>
+                      <div className="mt-4">
+                        <Link
+                          to={`/nft/${art.mint}`}
+                          className="inline-block mt-2 text-sm font-semibold
+                              bg-gradient-to-r from-purple-400 to-pink-500
+                              bg-clip-text text-transparent underline hover:opacity-90 transition"
+                        >
+                          View More
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -178,13 +197,18 @@ const Home: React.FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
                     </div>
 
-                    <div className="p-4">
+                      <div className="p-4">
                       <h3 className="text-sm font-medium text-gray-300 group-hover:text-white transition">
                         {art.name}
                       </h3>
-                      <p className="text-lg font-semibold text-white mt-1">
-                        {art.price}
-                      </p>
+                      <Link
+                        to={`/nft/${art.mint}`}
+                        className="inline-block mt-2 text-sm font-semibold
+                              bg-gradient-to-r from-purple-400 to-pink-500
+                              bg-clip-text text-transparent underline hover:opacity-90 transition"
+                      >
+                        View More
+                      </Link>
                     </div>
                   </div>
                 ))}
@@ -216,13 +240,18 @@ const Home: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="p-4">
+                      <div className="p-4">
                       <p className="text-sm text-gray-300 group-hover:text-white transition">
                         {art.name}
                       </p>
-                      <p className="text-lg font-bold text-white mt-1">
-                        {art.price} SOL
-                      </p>
+                      <Link
+                        to={`/nft/${art.mint}`}
+                        className="inline-block mt-2 text-sm font-semibold
+                              bg-gradient-to-r from-purple-400 to-pink-500
+                              bg-clip-text text-transparent underline hover:opacity-90 transition"
+                      >
+                        View More
+                      </Link>
                     </div>
                   </div>
                 ))}
